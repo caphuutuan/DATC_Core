@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title> Ecommerce | Dashboard</title>
+    <link rel="shortcut icon" type="image/svg" href="~/adminassets/img/adminltelogo.png" />" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -25,14 +26,15 @@
     <link href="~/adminassets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
     <!-- summernote -->
     <link href="~/adminassets/plugins/summernote/summernote-bs4.min.css" rel="stylesheet" />
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
+    <div class="wrapper" style="margin-top: -25px">
 
-        <!-- Preloader -->
+        @* <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="~/adminassets/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-        </div>
+        </div> *@
         <!-- Navbar -->
         @await Html.PartialAsync("_NavBar.cshtml")
         <!-- /.navbar -->
@@ -42,7 +44,7 @@
         <!-- /. Main Sidebar Container -->
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="padding-top: 50px">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
@@ -63,14 +65,16 @@
             <!-- Main content -->
             <section class="content">
                @RenderBody()
+
+            </section>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2023 <a href="https://facebook.com/charlestuan1412/">CharlesTuan253</a>.</strong>
+            <strong>Copyright &copy; 2023.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
+                <b>Facebook: <a href="https://facebook.com/charlestuan1412/">CharlesTuan253</a></b>
             </div>
         </footer>
 
@@ -114,9 +118,14 @@
     <script src="~/adminassets/plugins/overlayscrollbars/js/jquery.overlayscrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/adminassets/dist/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
+
+
+
+
+
+    @* <!-- AdminLTE for demo purposes -->
     <script src="~/adminassets/dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) --> *@
     <script src="~/adminassets/dist/js/pages/dashboard.js"></script>
 </body>
 </html>
