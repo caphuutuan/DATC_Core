@@ -1,11 +1,4 @@
 Test
 
 
-test abc 123
-
-á
-d
-ád
-á
-d
-ád
+nutget : Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
