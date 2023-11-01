@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DATC_Core.Models
 {
-    public partial class DATCCoreMineContext : DbContext
+    public partial class DATCCoreMineDBContext : DbContext
     {
-        public DATCCoreMineContext()
+        public DATCCoreMineDBContext()
         {
         }
 
-        public DATCCoreMineContext(DbContextOptions<DATCCoreMineContext> options)
+        public DATCCoreMineDBContext(DbContextOptions<DATCCoreMineDBContext> options)
             : base(options)
         {
         }
