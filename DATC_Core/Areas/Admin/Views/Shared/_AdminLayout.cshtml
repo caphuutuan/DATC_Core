@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
     <link href="~/adminassets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <!-- Tempusdominus Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- iCheck -->
     <link href="~/adminassets/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
     <!-- JQVMap -->
@@ -44,7 +46,7 @@
         <!-- /. Main Sidebar Container -->
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper" style="padding-top: 50px">
+        <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
@@ -119,13 +121,15 @@
     <!-- AdminLTE App -->
     <script src="~/adminassets/dist/js/adminlte.js"></script>
 
-
-
-
-
     @* <!-- AdminLTE for demo purposes -->
     <script src="~/adminassets/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) --> *@
     <script src="~/adminassets/dist/js/pages/dashboard.js"></script>
+
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required:false)
+
+
+
 </body>
 </html>
