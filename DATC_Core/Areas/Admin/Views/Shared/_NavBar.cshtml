@@ -1,5 +1,5 @@
 ﻿<style>
-    .navBarFixede{
+    .navBarFixede {
         position: fixed;
         z-index: 999;
         width: 100%;
@@ -48,7 +48,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-comments"></i>
-                <span class="badge badge-danger navbar-badge">3</span>
+                <span class="badge badge-danger navbar-badge">∞+</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="#" class="dropdown-item">
@@ -106,7 +106,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+                <span class="badge badge-warning navbar-badge">∞+</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">15 Notifications</span>
@@ -134,10 +134,27 @@
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>
-        @* <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
                 <i class="fas fa-th-large"></i>
             </a>
-        </li> *@
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <img src="~/adminassets/img/adminltelogo.png" class="img-circle elevation-1" alt="Image" width="35" style="margin-top:-5px">
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="min-width:200px; font-size: 15px;">
+                <span class="dropdown-item dropdown-header font-weight-bold text-drank d-block">Admin</span>
+                <div class="dropdown-divider"></div>
+                <a href="~/Admin/Dashboard/Profiles" class="dropdown-item text-left">
+                    <i class="far fa-address-card mr-2"></i> Tài khoản của tôi
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="~/Admin/Logout" class="dropdown-item dropdown-footer text-left">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất
+                </a>
+            </div>
+        </li>
+
     </ul>
 </nav>
