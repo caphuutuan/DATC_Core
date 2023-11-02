@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-    <section class="content py-2">
+<section class="content py-2">
     <div class="container-fluid">
         <!-- content -->
         <div class="card">
@@ -37,6 +37,7 @@
                             <th class="no-sort">Tên danh mục</th>
                             <th class="no-sort">Mô tả</th>
                             <th class="">Cấp cha</th>
+                            <th class="">Thumb</th>
                             <th class="no-sort text-center" style="width:10rem">Action</th>
                         </tr>
                     </thead>
@@ -46,18 +47,18 @@
                             <tr>
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.CateId)</td>
                                 <td><a href="~/Admin/AdminCategories/Details/@Html.DisplayFor(modelItem => item.CateId)">@Html.DisplayFor(modelItem => item.CateName)</a>  </td>
-                                @* <td><a href="~/@item.Slug">@Html.DisplayFor(modelItem => item.Slug)</a> </td> *@
                                 <td>  @Html.DisplayFor(modelItem => item.Description)</td>
                                 <td>  @Html.DisplayFor(modelItem => item.ParentId)</td>
+                                <td>  @Html.DisplayFor(modelItem => item.Thumb)</td>
                                 <td class="text-center">
                                     <label class="switch">
                                         @if (item.Published == true)
                                         {
-                                            <input class="changeStatus" data-id="@item.CateId" data-controller="Category" type="checkbox" checked>
+                                            <input class="changeStatus" data-id="@item.CateId" data-controller="AdminCategories" type="checkbox" checked>
                                         }
                                         else
                                         {
-                                            <input class="changeStatus" data-id="@item.CateId" data-controller="Category" type="checkbox">
+                                            <input class="changeStatus" data-id="@item.CateId" data-controller="AdminCategories" type="checkbox">
                                         }
                                         <span class="slider round"></span>
                                     </label>

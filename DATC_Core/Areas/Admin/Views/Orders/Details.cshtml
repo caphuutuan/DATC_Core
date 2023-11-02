@@ -1,0 +1,76 @@
+﻿@model DATC_Core.Models.Order
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content my-2">
+    <div class="container-fluid">
+        <!--Content-->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="text-csm">@ViewBag.Title</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right pt-1">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <a href="~/Admin/Orders/Edit/@Model.OrderId" class="text-white"><i class="fas fa-pen fa-xs"></i>&nbsp; Sửa</a>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <a href="~/Admin/Orders/DelTrash/@Model.OrderId" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp;Xóa</a>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <a href="~/Admin/Orders/Index/@Model.OrderId" class="text-white"><i class="fas fa-door-open fa-xs"></i>&nbsp;Thoát</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.OrderId)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.OrderId)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Customer )</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Customer)</td>
+                    <tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.OrderDate)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.OrderDate)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.ShipDate)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.ShipDate)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.PaymentId)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.PaymentId)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.TransactStatus)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.TransactStatus)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Paid)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Paid)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Deleted)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Deleted)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Note)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Note)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
