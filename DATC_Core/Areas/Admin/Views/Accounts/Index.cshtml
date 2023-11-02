@@ -1,84 +1,87 @@
 ﻿@model IEnumerable<DATC_Core.Models.Account>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý người dùng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastLogin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastLogin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.RoleId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AccountId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AccountId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AccountId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<section class="content py-2">
+    <div class="container-fluid">
+        <!-- content -->
+        <div class="card">
+            <!-- card-header -->
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="text-csm">@ViewBag.Title</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right pt-1">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <a href="~/Admin/Accounts/Create" class="text-white"><i class="fas fa-plus fa-xs"></i>&nbsp; Thêm mới</a>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <a href="~/Admin/Accounts/Trash" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp; Thùng rác (@(ViewBag.count_trash ?? "?"))</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+
+            <div class="card-body">
+                <table id="cate1" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:3rem;">ID</th>
+                            <th class="no-sort">Tên tài khoản</th>
+                            <th class="no-sort">Email</th>
+                            <th class="no-sort">Phone</th>
+                            <th class="no-sort">Password</th>
+                            <th class="no-sort">Last Login</th>
+                            <th class="no-sort">Ngày tạo</th>
+                            <th class="no-sort text-center" style="width:10rem">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.AccountId)</td>
+                                <td><a href="~/Admin/Accounts/Details/@Html.DisplayFor(modelItem => item.AccountId)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
+                                <td>  @Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>  @Html.DisplayFor(modelItem => item.Phone)</td>
+                                <td>  @Html.DisplayFor(modelItem => item.Password)</td>
+                                <td>  @Html.DisplayFor(modelItem => item.LastLogin)</td>
+                                <td>  @Html.DisplayFor(modelItem => item.CreateDate)</td>
+                                <td class="text-center">
+                                    <label class="switch">
+                                        @if (item.Active == true)
+                                        {
+                                            <input class="changeStatus" data-id="@item.AccountId" data-controller="Accounts" type="checkbox" checked>
+                                        }
+                                        else
+                                        {
+                                            <input class="changeStatus" data-id="@item.AccountId" data-controller="Accounts" type="checkbox">
+                                        }
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
+                                        <a href="@Url.Action("Edit", "Accounts", new { id = item.AccountId })" class="text-white"><i class="fas fa-pen"></i></a>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                        <a href="@Url.Action("Delete", "Accounts", new { id = item.AccountId })" class="text-white"><i class="far fa-trash-alt"></i></a>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /. content -->
+
+    </div>
+</section>
+
