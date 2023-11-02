@@ -4,40 +4,57 @@
     ViewData["Title"] = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+<section class="content my-2">
+    <div class="container-fluid">
+        <!--Content-->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="text-csm">@ViewBag.Title</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right pt-1">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <a href="~/Admin/Shippers/Edit/@Model.ShipperId" class="text-white"><i class="fas fa-pen fa-xs"></i>&nbsp; Sửa</a>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <a href="~/Admin/Shippers/DelTrash/@Model.ShipperId" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp;Xóa</a>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <a href="~/Admin/Shippers/Index/@Model.ShipperId" class="text-white"><i class="fas fa-door-open fa-xs"></i>&nbsp;Thoát</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
 
-<h1>Details</h1>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.ShipperId)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.ShipperId)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.ShipperName )</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.ShipperName)</td>
+                    <tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Phone)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Phone)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.Company)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Company)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.ShipDate)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.ShipDate)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div>
-    <h4>Shipper</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShipperName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShipperName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Company)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShipDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShipDate)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ShipperId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>

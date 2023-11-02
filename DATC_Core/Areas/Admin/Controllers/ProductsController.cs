@@ -12,29 +12,29 @@ namespace DATC_Core.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductsController : Controller
     {
-        private readonly DATCCoreMineDBContext _context;
+        private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
 
         public ProductsController(DATCCoreMineDBContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: Admin/Products
         public async Task<IActionResult> Index()
         {
-            var dATCCoreMineDBContext = _context.Products.Include(p => p.Cate);
+            var dATCCoreMineDBContext = db.Products.Include(p => p.Cate);
             return View(await dATCCoreMineDBContext.ToListAsync());
         }
 
         // GET: Admin/Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null || db.Products == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var product = await db.Products
                 .Include(p => p.Cate)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
             if (product == null)
@@ -48,7 +48,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/Products/Create
         public IActionResult Create()
         {
-            ViewData["CateId"] = new SelectList(_context.Categoryies, "CateId", "CateId");
+            ViewData["CateId"] = new SelectList(db.Categoryies, "CateId", "CateId");
             return View();
         }
 
@@ -61,28 +61,28 @@ namespace DATC_Core.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
+                db.Add(product);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CateId"] = new SelectList(_context.Categoryies, "CateId", "CateId", product.CateId);
+            ViewData["CateId"] = new SelectList(db.Categoryies, "CateId", "CateId", product.CateId);
             return View(product);
         }
 
         // GET: Admin/Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null || db.Products == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            var product = await db.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
-            ViewData["CateId"] = new SelectList(_context.Categoryies, "CateId", "CateId", product.CateId);
+            ViewData["CateId"] = new SelectList(db.Categoryies, "CateId", "CateId", product.CateId);
             return View(product);
         }
 
@@ -102,8 +102,8 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    db.Update(product);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,19 +118,19 @@ namespace DATC_Core.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CateId"] = new SelectList(_context.Categoryies, "CateId", "CateId", product.CateId);
+            ViewData["CateId"] = new SelectList(db.Categoryies, "CateId", "CateId", product.CateId);
             return View(product);
         }
 
         // GET: Admin/Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null || db.Products == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var product = await db.Products
                 .Include(p => p.Cate)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
             if (product == null)
@@ -146,23 +146,41 @@ namespace DATC_Core.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Products == null)
+            if (db.Products == null)
             {
                 return Problem("Entity set 'DATCCoreMineDBContext.Products'  is null.");
             }
-            var product = await _context.Products.FindAsync(id);
+            var product = await db.Products.FindAsync(id);
             if (product != null)
             {
-                _context.Products.Remove(product);
+                db.Products.Remove(product);
             }
             
-            await _context.SaveChangesAsync();
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProductExists(int id)
         {
-          return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
+          return (db.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> Review(int? id)
+        {
+            if (id == null || db.Products == null)
+            {
+                return NotFound();
+            }
+
+            var product = await db.Products
+                .Include(p => p.Cate)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
     }
 }

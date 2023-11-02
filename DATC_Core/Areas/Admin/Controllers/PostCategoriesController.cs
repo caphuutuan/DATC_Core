@@ -12,30 +12,30 @@ namespace DATC_Core.Areas.Admin.Controllers
     [Area("Admin")]
     public class PostCategoriesController : Controller
     {
-        private readonly DATCCoreMineDBContext _context;
+        private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
 
         public PostCategoriesController(DATCCoreMineDBContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: Admin/PostCategories
         public async Task<IActionResult> Index()
         {
-              return _context.PostCategorys != null ? 
-                          View(await _context.PostCategorys.ToListAsync()) :
+              return db.PostCategorys != null ? 
+                          View(await db.PostCategorys.ToListAsync()) :
                           Problem("Entity set 'DATCCoreMineDBContext.PostCategorys'  is null.");
         }
 
         // GET: Admin/PostCategories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.PostCategorys == null)
+            if (id == null || db.PostCategorys == null)
             {
                 return NotFound();
             }
 
-            var postCategory = await _context.PostCategorys
+            var postCategory = await db.PostCategorys
                 .FirstOrDefaultAsync(m => m.CateId == id);
             if (postCategory == null)
             {
@@ -48,6 +48,8 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/PostCategories/Create
         public IActionResult Create()
         {
+            ViewBag.listCat = new SelectList(db.PostCategorys.Where(m => m.Published == true), "CateId", "CateName", 0);
+            ViewBag.listLevel = new SelectList(db.PostCategorys.Where(m => m.Published == true), "Ordering", "CateName", 0);
             return View();
         }
 
@@ -58,10 +60,13 @@ namespace DATC_Core.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Cover")] PostCategory postCategory)
         {
+            ViewBag.listCat = new SelectList(db.PostCategorys.Where(m => m.Published == true), "CateId", "CateName", 0);
+            ViewBag.listLevel = new SelectList(db.PostCategorys.Where(m => m.Published == true), "Ordering", "CateName", 0);
+
             if (ModelState.IsValid)
             {
-                _context.Add(postCategory);
-                await _context.SaveChangesAsync();
+                db.Add(postCategory);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(postCategory);
@@ -70,12 +75,12 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/PostCategories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.PostCategorys == null)
+            if (id == null || db.PostCategorys == null)
             {
                 return NotFound();
             }
 
-            var postCategory = await _context.PostCategorys.FindAsync(id);
+            var postCategory = await db.PostCategorys.FindAsync(id);
             if (postCategory == null)
             {
                 return NotFound();
@@ -99,8 +104,8 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(postCategory);
-                    await _context.SaveChangesAsync();
+                    db.Update(postCategory);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,12 +126,12 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/PostCategories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.PostCategorys == null)
+            if (id == null || db.PostCategorys == null)
             {
                 return NotFound();
             }
 
-            var postCategory = await _context.PostCategorys
+            var postCategory = await db.PostCategorys
                 .FirstOrDefaultAsync(m => m.CateId == id);
             if (postCategory == null)
             {
@@ -141,23 +146,23 @@ namespace DATC_Core.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.PostCategorys == null)
+            if (db.PostCategorys == null)
             {
                 return Problem("Entity set 'DATCCoreMineDBContext.PostCategorys'  is null.");
             }
-            var postCategory = await _context.PostCategorys.FindAsync(id);
+            var postCategory = await db.PostCategorys.FindAsync(id);
             if (postCategory != null)
             {
-                _context.PostCategorys.Remove(postCategory);
+                db.PostCategorys.Remove(postCategory);
             }
             
-            await _context.SaveChangesAsync();
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PostCategoryExists(int id)
         {
-          return (_context.PostCategorys?.Any(e => e.CateId == id)).GetValueOrDefault();
+          return (db.PostCategorys?.Any(e => e.CateId == id)).GetValueOrDefault();
         }
     }
 }

@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.34" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.24" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.23" />
@@ -25,6 +25,105 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Public\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Assets\images\banner_1.jpg" />
+    <None Include="wwwroot\Assets\images\banner_2.jpg" />
+    <None Include="wwwroot\Assets\images\banner_3.jpg" />
+    <None Include="wwwroot\Assets\images\blog_1.jpg" />
+    <None Include="wwwroot\Assets\images\blog_2.jpg" />
+    <None Include="wwwroot\Assets\images\blog_3.jpg" />
+    <None Include="wwwroot\Assets\images\deal_ofthe_week.png" />
+    <None Include="wwwroot\Assets\images\desc_1.jpg" />
+    <None Include="wwwroot\Assets\images\desc_2.jpg" />
+    <None Include="wwwroot\Assets\images\desc_3.jpg" />
+    <None Include="wwwroot\Assets\images\map_marker.png" />
+    <None Include="wwwroot\Assets\images\product_1.png" />
+    <None Include="wwwroot\Assets\images\product_10.png" />
+    <None Include="wwwroot\Assets\images\product_2.png" />
+    <None Include="wwwroot\Assets\images\product_3.png" />
+    <None Include="wwwroot\Assets\images\product_4.png" />
+    <None Include="wwwroot\Assets\images\product_5.png" />
+    <None Include="wwwroot\Assets\images\product_6.png" />
+    <None Include="wwwroot\Assets\images\product_7.png" />
+    <None Include="wwwroot\Assets\images\product_8.png" />
+    <None Include="wwwroot\Assets\images\product_9.png" />
+    <None Include="wwwroot\Assets\images\single_1.jpg" />
+    <None Include="wwwroot\Assets\images\single_1_thumb.jpg" />
+    <None Include="wwwroot\Assets\images\single_2.jpg" />
+    <None Include="wwwroot\Assets\images\single_2_thumb.jpg" />
+    <None Include="wwwroot\Assets\images\single_3.jpg" />
+    <None Include="wwwroot\Assets\images\single_3_thumb.jpg" />
+    <None Include="wwwroot\Assets\images\slider_1.jpg" />
+    <None Include="wwwroot\Assets\js\categories_custom.js" />
+    <None Include="wwwroot\Assets\js\contact_custom.js" />
+    <None Include="wwwroot\Assets\js\custom.js" />
+    <None Include="wwwroot\Assets\js\jquery-3.2.1.min.js" />
+    <None Include="wwwroot\Assets\js\single_custom.js" />
+    <None Include="wwwroot\Assets\plugins\easing\easing.js" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\css\font-awesome.css" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\animated.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\core.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\fixed-width.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\font-awesome.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\icons.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\larger.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\list.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\mixins.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\path.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\screen-reader.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\stacked.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\variables.less" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_animated.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_core.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_icons.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_larger.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_list.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_mixins.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_path.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_stacked.scss" />
+    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_variables.scss" />
+    <None Include="wwwroot\Assets\plugins\Isotope\isotope.pkgd.min.js" />
+    <None Include="wwwroot\Assets\plugins\jquery-ui-1.12.1.custom\jquery-ui.css" />
+    <None Include="wwwroot\Assets\plugins\jquery-ui-1.12.1.custom\jquery-ui.js" />
+    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\ajax-loader.gif" />
+    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\animate.css" />
+    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.carousel.css" />
+    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.carousel.js" />
+    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.theme.default.css" />
+    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.video.play.png" />
+    <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.eot" />
+    <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.svg" />
+    <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.ttf" />
+    <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.woff" />
+    <None Include="wwwroot\Assets\plugins\themify-icons\themify-icons.css" />
+    <None Include="wwwroot\Assets\styles\bootstrap4\bootstrap.min.css" />
+    <None Include="wwwroot\Assets\styles\bootstrap4\bootstrap.min.js" />
+    <None Include="wwwroot\Assets\styles\bootstrap4\popper.js" />
+    <None Include="wwwroot\Assets\styles\categories_responsive.css" />
+    <None Include="wwwroot\Assets\styles\categories_styles.css" />
+    <None Include="wwwroot\Assets\styles\contact_responsive.css" />
+    <None Include="wwwroot\Assets\styles\contact_styles.css" />
+    <None Include="wwwroot\Assets\styles\main_styles.css" />
+    <None Include="wwwroot\Assets\styles\responsive.css" />
+    <None Include="wwwroot\Assets\styles\single_responsive.css" />
+    <None Include="wwwroot\Assets\styles\single_styles.css" />
   </ItemGroup>
 
 </Project>

@@ -38,6 +38,7 @@
         <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="~/adminassets/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
         </div> *@
+
         <!-- Navbar -->
         @await Html.PartialAsync("_NavBar.cshtml")
         <!-- /.navbar -->
@@ -48,6 +49,7 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
@@ -65,6 +67,7 @@
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
+
             <!-- Main content -->
             <section class="content">
                @RenderBody()
@@ -73,21 +76,19 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2023.</strong>
-            All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
-                <b>Facebook: <a href="https://facebook.com/charlestuan1412/">CharlesTuan253</a></b>
-            </div>
-        </footer>
+        
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
         </aside>
         <!-- /.control-sidebar -->
+
     </div>
     <!-- ./wrapper -->
+
+    @await Html.PartialAsync("_Footer.cshtml")
+
 
 
 
