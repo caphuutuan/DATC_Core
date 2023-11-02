@@ -49,6 +49,12 @@ namespace DATC_Core.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["RoleId"] = new SelectList(db.Roles, "RoleId", "RoleId");
+            ViewBag.listRole = new SelectList(db.Roles, "RoleId", "RoleId");
+            ViewBag.ActiveOptions = new List<SelectListItem> {
+                    new SelectListItem { Text = "Active", Value = "true" },
+                    new SelectListItem { Text = "Inactive", Value = "false" }
+                }
+            ;
             return View();
         }
 
@@ -155,14 +161,14 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 db.Accounts.Remove(account);
             }
-            
+
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AccountExists(int id)
         {
-          return (db.Accounts?.Any(e => e.AccountId == id)).GetValueOrDefault();
+            return (db.Accounts?.Any(e => e.AccountId == id)).GetValueOrDefault();
         }
     }
 }

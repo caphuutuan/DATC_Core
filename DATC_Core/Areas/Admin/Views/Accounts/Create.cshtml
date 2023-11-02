@@ -5,66 +5,84 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Create</h1>
 
-<h4>Account</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Salt" class="control-label"></label>
-                <input asp-for="Salt" class="form-control" />
-                <span asp-validation-for="Salt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoleId" class="control-label"></label>
-                <select asp-for="RoleId" class ="form-control" asp-items="ViewBag.RoleId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastLogin" class="control-label"></label>
-                <input asp-for="LastLogin" class="form-control" />
-                <span asp-validation-for="LastLogin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <section class="content py-2">
+        <div class="container-fluid">
+            <!--Content-->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="text-csm">@ViewBag.Title</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="float-right pt-1">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-save"></i>&nbsp; Save
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <a href="~/Admin/Accounts/Index" class="text-white"><i class="fas fa-door-open"></i>&nbsp; Thoát</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-horizontal">
 
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tên người dùng</label>
+                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Số điện thoại</label>
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Email</label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Password</label>
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger"  })
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Quyền</label>
+                                @* @Html.DropDownListFor(model => model.ParentId,  (SelectList)ViewBag.listCat, "[Là cấp cha]" , new { @class = "form-control" }) *@
+                                @Html.DropDownListFor(model => model.RoleId,  new[] { new SelectListItem { Value = "1", Text = "Admin" }, new SelectListItem { Value = "2", Text = "Staff" },new SelectListItem { Value = "3", Text = "Customer" } } ,"[Chọn phân quyền]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Trạng thái</label>
+                                @Html.DropDownListFor(model => model.Active, new[] { new SelectListItem { Value = "1", Text = "Hoạt động" }, new SelectListItem { Value = "2", Text = "Chưa hoạt động" } } ,"[Chọn trạng thái]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

@@ -12,30 +12,30 @@ namespace DATC_Core.Areas.Admin.Controllers
     [Area("Admin")]
     public class AdminRolesController : Controller
     {
-        private readonly DATCCoreMineDBContext _context;
+        private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
 
         public AdminRolesController(DATCCoreMineDBContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: Admin/AdminRoles
         public async Task<IActionResult> Index()
         {
-              return _context.Roles != null ? 
-                          View(await _context.Roles.ToListAsync()) :
+            return db.Roles != null ? 
+                          View(await db.Roles.ToListAsync()) :
                           Problem("Entity set 'DATCCoreMineContext.Roles'  is null.");
         }
 
         // GET: Admin/AdminRoles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Roles == null)
+            if (id == null || db.Roles == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles
+            var role = await db.Roles
                 .FirstOrDefaultAsync(m => m.RoleId == id);
             if (role == null)
             {
@@ -60,8 +60,8 @@ namespace DATC_Core.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(role);
-                await _context.SaveChangesAsync();
+                db.Add(role);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(role);
@@ -70,12 +70,12 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/AdminRoles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Roles == null)
+            if (id == null || db.Roles == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles.FindAsync(id);
+            var role = await db.Roles.FindAsync(id);
             if (role == null)
             {
                 return NotFound();
@@ -99,8 +99,8 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(role);
-                    await _context.SaveChangesAsync();
+                    db.Update(role);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,12 +121,12 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/AdminRoles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Roles == null)
+            if (id == null || db.Roles == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles
+            var role = await db.Roles
                 .FirstOrDefaultAsync(m => m.RoleId == id);
             if (role == null)
             {
@@ -141,23 +141,29 @@ namespace DATC_Core.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Roles == null)
+            if (db.Roles == null)
             {
                 return Problem("Entity set 'DATCCoreMineContext.Roles'  is null.");
             }
-            var role = await _context.Roles.FindAsync(id);
+            var role = await db.Roles.FindAsync(id);
             if (role != null)
             {
-                _context.Roles.Remove(role);
+                db.Roles.Remove(role);
             }
             
-            await _context.SaveChangesAsync();
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RoleExists(int id)
         {
-          return (_context.Roles?.Any(e => e.RoleId == id)).GetValueOrDefault();
+          return (db.Roles?.Any(e => e.RoleId == id)).GetValueOrDefault();
+        }
+
+        public int countRole()
+        {
+            return ViewBag.countRole = db.Roles.Count();
+
         }
     }
 }
