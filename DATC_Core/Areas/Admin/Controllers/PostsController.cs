@@ -12,29 +12,29 @@ namespace DATC_Core.Areas.Admin.Controllers
     [Area("Admin")]
     public class PostsController : Controller
     {
-        private readonly DATCCoreMineDBContext _context;
+        private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
 
         public PostsController(DATCCoreMineDBContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: Admin/Posts
         public async Task<IActionResult> Index()
         {
-            var dATCCoreMineDBContext = _context.Posts.Include(p => p.Account).Include(p => p.Cate);
+            var dATCCoreMineDBContext = db.Posts.Include(p => p.Account).Include(p => p.Cate);
             return View(await dATCCoreMineDBContext.ToListAsync());
         }
 
         // GET: Admin/Posts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Posts == null)
+            if (id == null || db.Posts == null)
             {
                 return NotFound();
             }
 
-            var post = await _context.Posts
+            var post = await db.Posts
                 .Include(p => p.Account)
                 .Include(p => p.Cate)
                 .FirstOrDefaultAsync(m => m.PostId == id);
@@ -49,8 +49,8 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/Posts/Create
         public IActionResult Create()
         {
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "AccountId", "AccountId");
-            ViewData["CateId"] = new SelectList(_context.PostCategorys, "CateId", "CateId");
+            ViewData["AccountId"] = new SelectList(db.Accounts, "AccountId", "AccountId");
+            ViewData["CateId"] = new SelectList(db.PostCategorys, "CateId", "CateId");
             return View();
         }
 
@@ -63,30 +63,30 @@ namespace DATC_Core.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(post);
-                await _context.SaveChangesAsync();
+                db.Add(post);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "AccountId", "AccountId", post.AccountId);
-            ViewData["CateId"] = new SelectList(_context.PostCategorys, "CateId", "CateId", post.CateId);
+            ViewData["AccountId"] = new SelectList(db.Accounts, "AccountId", "AccountId", post.AccountId);
+            ViewData["CateId"] = new SelectList(db.PostCategorys, "CateId", "CateId", post.CateId);
             return View(post);
         }
 
         // GET: Admin/Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Posts == null)
+            if (id == null || db.Posts == null)
             {
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            var post = await db.Posts.FindAsync(id);
             if (post == null)
             {
                 return NotFound();
             }
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "AccountId", "AccountId", post.AccountId);
-            ViewData["CateId"] = new SelectList(_context.PostCategorys, "CateId", "CateId", post.CateId);
+            ViewData["AccountId"] = new SelectList(db.Accounts, "AccountId", "AccountId", post.AccountId);
+            ViewData["CateId"] = new SelectList(db.PostCategorys, "CateId", "CateId", post.CateId);
             return View(post);
         }
 
@@ -106,8 +106,8 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(post);
-                    await _context.SaveChangesAsync();
+                    db.Update(post);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,20 +122,20 @@ namespace DATC_Core.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "AccountId", "AccountId", post.AccountId);
-            ViewData["CateId"] = new SelectList(_context.PostCategorys, "CateId", "CateId", post.CateId);
+            ViewData["AccountId"] = new SelectList(db.Accounts, "AccountId", "AccountId", post.AccountId);
+            ViewData["CateId"] = new SelectList(db.PostCategorys, "CateId", "CateId", post.CateId);
             return View(post);
         }
 
         // GET: Admin/Posts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Posts == null)
+            if (id == null || db.Posts == null)
             {
                 return NotFound();
             }
 
-            var post = await _context.Posts
+            var post = await db.Posts
                 .Include(p => p.Account)
                 .Include(p => p.Cate)
                 .FirstOrDefaultAsync(m => m.PostId == id);
@@ -152,23 +152,28 @@ namespace DATC_Core.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Posts == null)
+            if (db.Posts == null)
             {
                 return Problem("Entity set 'DATCCoreMineDBContext.Posts'  is null.");
             }
-            var post = await _context.Posts.FindAsync(id);
+            var post = await db.Posts.FindAsync(id);
             if (post != null)
             {
-                _context.Posts.Remove(post);
+                db.Posts.Remove(post);
             }
             
-            await _context.SaveChangesAsync();
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PostExists(int id)
         {
-          return (_context.Posts?.Any(e => e.PostId == id)).GetValueOrDefault();
+          return (db.Posts?.Any(e => e.PostId == id)).GetValueOrDefault();
+        }
+
+        public int listPostCate()
+        {
+            return 0;
         }
     }
 }
