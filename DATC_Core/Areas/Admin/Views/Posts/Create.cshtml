@@ -5,100 +5,132 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Create</h1>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<h4>Post</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Scontents" class="control-label"></label>
-                <input asp-for="Scontents" class="form-control" />
-                <span asp-validation-for="Scontents" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Contents" class="control-label"></label>
-                <input asp-for="Contents" class="form-control" />
-                <span asp-validation-for="Contents" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Thumb" class="control-label"></label>
-                <input asp-for="Thumb" class="form-control" />
-                <span asp-validation-for="Thumb" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Published" /> @Html.DisplayNameFor(model => model.Published)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Alias" class="control-label"></label>
-                <input asp-for="Alias" class="form-control" />
-                <span asp-validation-for="Alias" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountId" class="control-label"></label>
-                <select asp-for="AccountId" class ="form-control" asp-items="ViewBag.AccountId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tags" class="control-label"></label>
-                <input asp-for="Tags" class="form-control" />
-                <span asp-validation-for="Tags" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CateId" class="control-label"></label>
-                <select asp-for="CateId" class ="form-control" asp-items="ViewBag.CateId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsHot" class="control-label"></label>
-                <input asp-for="IsHot" class="form-control" />
-                <span asp-validation-for="IsHot" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsNew" class="control-label"></label>
-                <input asp-for="IsNew" class="form-control" />
-                <span asp-validation-for="IsNew" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MetaDesc" class="control-label"></label>
-                <input asp-for="MetaDesc" class="form-control" />
-                <span asp-validation-for="MetaDesc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MetaKey" class="control-label"></label>
-                <input asp-for="MetaKey" class="form-control" />
-                <span asp-validation-for="MetaKey" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Views" class="control-label"></label>
-                <input asp-for="Views" class="form-control" />
-                <span asp-validation-for="Views" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <section class="content py-2">
+        <div class="container-fluid">
+            <!--Content-->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="text-csm">@ViewBag.Title</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="float-right pt-1">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-save"></i>&nbsp; Save
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <a href="~/Admin/Posts/Index" class="text-white"><i class="fas fa-door-open"></i>&nbsp; Thoát</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-horizontal">
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tựa đề</label>
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Mô tả</label>
+                                    @Html.EditorFor(model => model.Scontents, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Scontents, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Nội dung</label>
+                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tác giả</label>
+                                    @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Nhãn</label>
+                                    @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Danh mục</label>
+                                    @Html.EditorFor(model => model.CateId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
+                                </div>
+                                @*
+                            <div class="form-group">
+                            <label for="exampleInputFile">Hình ảnh</label>
+                            <div class="input-group">
+                            <div class="custom-file">
+                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
+                            </div>
+                            <div class="input-group-append">
+                            <input type="button" value="Tải ảnh" onclick="BrowseServer('txtImage');" />
+                            </div>
+                            </div>
+                            </div>*@
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Hình ảnh</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
+
+                                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Alias</label>
+                                @Html.EditorFor(model => model.Alias, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Alias, "", new { @class = "text-danger"  })
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Nổi bật</label>
+                                @Html.DropDownListFor(model => model.IsHot,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" } }, "[Nổi bật]" , new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.IsHot, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Mới</label>
+                                @Html.DropDownListFor(model => model.IsNew,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" }}, "[Mới]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.IsNew, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Trạng thái</label>
+                                @Html.DropDownListFor(model => model.Published,  new[] { new SelectListItem { Value = "true", Text = "Hiển thị" },new SelectListItem { Value = "false", Text = "Không hiển thị" }, }, "[Trạng thái]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
 
