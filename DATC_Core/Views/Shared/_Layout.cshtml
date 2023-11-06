@@ -25,17 +25,22 @@
 	<link rel="stylesheet" type="text/css" href="~/Assets/plugins/OwlCarousel2-2.2.1/animate.css">
 	<link rel="stylesheet" type="text/css" href="~/Assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="~/Assets/styles/slider.css">
+	<!-- common css -->
+    <link href="~/assets/styles/commonstyle.css" rel="stylesheet" />
+	<!-- responsive -->
+    <link href="~/assets/styles/responsive.css" rel="stylesheet" />
 	<!-- home -->
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/main_styles.css">
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/responsive.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/styles/main_styles.css">
+    <link href="~/assets/styles/main_responsive.css" rel="stylesheet" />
 	<!-- contact -->
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/contact_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/styles/contact_styles.css">
+    <link href="~/assets/styles/contact_responsive.css" rel="stylesheet" />
 	<!-- category -->
-	<link rel="stylesheet" href="~/Assets/styles/categories_styles.css" />
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/categories_responsive.css">
+    <link rel="stylesheet" href="~/Assets/styles/categories_styles.css" />
+    <link href="~/assets/styles/categories_responsive.css" rel="stylesheet" />
 	<!-- product -->
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/single_styles.css">
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/single_responsive.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/styles/single_styles.css">
+    <link href="~/assets/styles/single_responsive.css" rel="stylesheet" />
 	<!-- product detail -->
 
 
@@ -48,7 +53,6 @@
 
 		<!-- Header -->
 		@await Html.PartialAsync("_Header")
- 
 		
 
 		@RenderBody()
@@ -59,7 +63,7 @@
 		
 
 		<!-- Blogs -->
-		@await Html.PartialAsync("_Blog.cshtml")
+		@* @await Html.PartialAsync("_Blog.cshtml") *@
 
 		<!-- Newsletter -->
 		@await Html.PartialAsync("_NewLetter.cshtml")

@@ -68,9 +68,11 @@
 						<ul class="navbar_menu">
 							<li><a href="~/Admin">Admin</a></li>
 							<li><a asp-controller="Product" asp-action="Index">shop</a></li>
-							<li><a href="#">promotion</a></li>
-							<li><a href="#">pages</a></li>
-							<li><a href="#">blog</a></li>
+							<li>
+								<a href="#" style="pointer-events: none; cursor: not-allowed;" class="disabled">promotion</a>
+							</li>
+							<li><a href="#" style="pointer-events: none; cursor: no-drop;" class="disabled">pages</a></li>
+							<li><a href="#" style="pointer-events: none; cursor: no-drop;" class="disabled">blog</a></li>
 							<li><a asp-controller="Home" asp-action="Contact">contact</a></li>
 						</ul>
 						<ul class="navbar_user">
@@ -97,7 +99,7 @@
 	<div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
 	<div class="hamburger_menu_content text-right">
 		<ul class="menu_top_nav">
-			<li class="menu_item has-children">
+			@* <li class="menu_item has-children">
 				<a href="#">
 					usd
 					<i class="fa fa-angle-down"></i>
@@ -108,8 +110,8 @@
 					<li><a href="#">eur</a></li>
 					<li><a href="#">gbp</a></li>
 				</ul>
-			</li>
-			<li class="menu_item has-children">
+			</li> *@
+			@* <li class="menu_item has-children">
 				<a href="#">
 					English
 					<i class="fa fa-angle-down"></i>
@@ -120,7 +122,13 @@
 					<li><a href="#">German</a></li>
 					<li><a href="#">Spanish</a></li>
 				</ul>
-			</li>
+			</li> *@
+			<li class="menu_item"><a href="#">home</a></li>
+			<li class="menu_item"><a href="#">shop</a></li>
+			<li class="menu_item"><a href="#">promotion</a></li>
+			@* <li class="menu_item"><a href="#">pages</a></li>
+			<li class="menu_item"><a href="#">blog</a></li> *@
+			<li class="menu_item"><a href="#">contact</a></li>
 			<li class="menu_item has-children">
 				<a href="#">
 					My Account
@@ -131,12 +139,6 @@
 					<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
 				</ul>
 			</li>
-			<li class="menu_item"><a href="#">home</a></li>
-			<li class="menu_item"><a href="#">shop</a></li>
-			<li class="menu_item"><a href="#">promotion</a></li>
-			<li class="menu_item"><a href="#">pages</a></li>
-			<li class="menu_item"><a href="#">blog</a></li>
-			<li class="menu_item"><a href="#">contact</a></li>
 		</ul>
 	</div>
 </div>
