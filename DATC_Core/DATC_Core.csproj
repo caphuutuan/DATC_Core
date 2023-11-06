@@ -121,7 +121,7 @@
     <None Include="wwwroot\Assets\styles\contact_responsive.css" />
     <None Include="wwwroot\Assets\styles\contact_styles.css" />
     <None Include="wwwroot\Assets\styles\main_styles.css" />
-    <None Include="wwwroot\Assets\styles\responsive.css" />
+    <None Include="wwwroot\Assets\styles\main_responsive.css" />
     <None Include="wwwroot\Assets\styles\single_responsive.css" />
     <None Include="wwwroot\Assets\styles\single_styles.css" />
   </ItemGroup>
