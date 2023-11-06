@@ -170,5 +170,21 @@ namespace DATC_Core.Areas.Admin.Controllers
         {
             return (db.Accounts?.Any(e => e.AccountId == id)).GetValueOrDefault();
         }
+
+        [HttpPost]
+        //[CustomAuthorizeAttribute(RoleID = "ADMIN")]
+        public JsonResult changeStatus(int id)
+        {
+            Account account = db.Accounts.Find(id);
+            account.Active = (account.Active == true) ? true : false;
+            //categoryie.Updated_at = DateTime.Now;
+            //categoryie.Updated_by = int.Parse(Session["Admin_ID"].ToString());
+            db.Entry(account).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(new
+            {
+                active = account.Active
+            });
+        }
     }
 }

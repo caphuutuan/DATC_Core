@@ -164,5 +164,22 @@ namespace DATC_Core.Areas.Admin.Controllers
         {
           return (db.PostCategorys?.Any(e => e.CateId == id)).GetValueOrDefault();
         }
+
+
+        [HttpPost]
+        //[CustomAuthorizeAttribute(RoleID = "ADMIN")]
+        public JsonResult changeStatus(int id)
+        {
+            PostCategory postCategory = db.PostCategorys.Find(id);
+            postCategory.Published = (postCategory.Published == true) ? true : false;
+            //categoryie.Updated_at = DateTime.Now;
+            //categoryie.Updated_by = int.Parse(Session["Admin_ID"].ToString());
+            db.Entry(postCategory).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(new
+            {
+                published = postCategory.Published
+            });
+        }
     }
 }
