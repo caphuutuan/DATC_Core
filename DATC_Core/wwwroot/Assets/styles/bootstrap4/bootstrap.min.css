@@ -40,8 +40,6 @@
     *, ::after, ::before {
         text-shadow: none !important;
         box-shadow: none !important;
-        margin: 0;
-        padding: 0;
     }
 
     a, a:visited {
@@ -101,8 +99,6 @@
 
 *, ::after, ::before {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 html {
