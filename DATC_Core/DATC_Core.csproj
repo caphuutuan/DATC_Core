@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\_NavBar.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.34" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
@@ -28,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\_NavBar.cshtml" />
     <None Include="wwwroot\Assets\images\banner_1.jpg" />
     <None Include="wwwroot\Assets\images\banner_2.jpg" />
     <None Include="wwwroot\Assets\images\banner_3.jpg" />
@@ -124,6 +129,14 @@
     <None Include="wwwroot\Assets\styles\main_responsive.css" />
     <None Include="wwwroot\Assets\styles\single_responsive.css" />
     <None Include="wwwroot\Assets\styles\single_styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_NavBar.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\_NavBar.cshtml" />
   </ItemGroup>
 
 </Project>

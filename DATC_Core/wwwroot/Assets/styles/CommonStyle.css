@@ -10,6 +10,10 @@
 2. Body and some general stuff
 *********************************/
 
+* {
+    margin: 0;
+    padding: 0;
+}
 body {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
