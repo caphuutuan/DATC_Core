@@ -52,7 +52,11 @@
 	<div class="super_container">
 
 		<!-- Header -->
-		@await Html.PartialAsync("_Header")
+		<header class="header trans_300">
+			@await Html.PartialAsync("_Header")
+			@await Html.PartialAsync("_NavBar")
+		</header>
+			@await Html.PartialAsync("_ResponsiveNavBar")
 		
 
 		@RenderBody()
