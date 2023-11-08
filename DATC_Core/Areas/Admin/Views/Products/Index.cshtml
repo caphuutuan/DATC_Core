@@ -8,83 +8,135 @@
 <section class="content py-2">
     <div class="container-fluid">
         <!--Content-->
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-8">
-                        <h5 class="text-csm">@ViewBag.Title</h5>
-                    </div>
-                    <div class="col-4">
-                        <div class="float-right pt-1">
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <a href="~/Admin/Products/Create" class="text-white"><i class="fas fa-plus fa-xs"></i>&nbsp; Thêm mới</a>
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm">
-                                <a href="~/Admin/Products/Trash" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp; Thùng rác (@(ViewBag.count_trash ?? "?"))</a>
-                            </button>
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="text-csm">@ViewBag.Title</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="float-right pt-1">
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <a href="~/Admin/Products/Create" class="text-white"><i class="fas fa-plus fa-xs"></i>&nbsp; Thêm mới</a>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <a href="~/Admin/Products/Trash" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp; Thùng rác (@(ViewBag.count_trash ?? "?"))</a>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-                <table id="cate1" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th class="text-center no-sort" style="width:3rem;">ID</th>
-                            <th class="text-center no-sort" style="width:10rem;">Tên sản phẩm</th>
-                            <th class="no-sort text-center" style="width:10rem">Loại sản phẩm</th>
-                            <th class="no-sort text-center" style="width:5rem">Giá</th>
-                            <th class="no-sort text-center" style="width:5rem">Giảm giá</th>
-                            <th class="no-sort text-center" style="width:10rem">Ngày tạo</th>
-                            <th class="no-sort text-center" style="width:5rem">Tồn kho</th>
-                            <th class="no-sort text-center" style="width:5rem">Bán chạy</th>
-                            <th class="no-sort text-center" style="width:10rem">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="cate1" class="table table-bordered table-hover">
+                        <thead>
                             <tr>
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.ProductId)</td>
-                                <td>
-                                    <a href="~/Admin/Products/Details/@Html.DisplayFor(modelItem => item.ProductId)">
-                                        @Html.DisplayFor(modelItem => item.ProductName)
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="~/Admin/Products/Details/@Html.DisplayFor(modelItem => item.CateId)">
-                                        @Html.DisplayFor(modelItem => item.CateId)
-                                    </a>
-                                </td>
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.Price)</td>
-                                <td class="text-center">@item.Discount</td>
-                                <td class="text-center">@item.CreateDate</td>
-                                <td class="text-center">@item.UnitsInStock</td>
-                                <td class="text-center">@item.BestSeller</td>
-                                <td class="text-center">
-                                    <label class="switch">
-                                        @if (item.Active == true)
-                                        {
-                                            <input class="changeStatus" data-id="@item.ProductId" data-controller="Products" type="checkbox" checked>
-                                        }
-                                        else
-                                        {
-                                            <input class="changeStatus" data-id="@item.ProductId" data-controller="Products" type="checkbox">
-                                        }
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
-                                        <a href="@Url.Action("Edit", "Products", new { id = item.ProductId })" class="text-white"><i class="fas fa-pen"></i></a>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa">
-                                        <a href="@Url.Action("Delete", "Products", new { id = item.ProductId })" class="text-white"><i class="far fa-trash-alt"></i></a>
-                                    </button>
-                                </td>
+                                <th class="text-center no-sort" style="width:3rem;">ID</th>
+                                <th class="text-center no-sort" style="width:10rem;">Tên sản phẩm</th>
+                                <th class="no-sort text-center" style="width:10rem">Loại sản phẩm</th>
+                                <th class="no-sort text-center" style="width:5rem">Giá</th>
+                                <th class="no-sort text-center" style="width:5rem">Giảm giá</th>
+                                <th class="no-sort text-center" style="width:10rem">Ngày tạo</th>
+                                <th class="no-sort text-center" style="width:5rem">Tồn kho</th>
+                                <th class="no-sort text-center" style="width:5rem">Bán chạy</th>
+                                <th class="no-sort text-center" style="width:10rem">Action</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.ProductId)</td>
+                                    <td>
+                                        <a href="~/Admin/Products/Details/@Html.DisplayFor(modelItem => item.ProductId)">
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="~/Admin/Products/Details/@Html.DisplayFor(modelItem => item.CateId)">
+                                            @Html.DisplayFor(modelItem => item.CateId)
+                                        </a>
+                                    </td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Price)</td>
+                                    <td class="text-center">@item.Discount</td>
+                                    <td class="text-center">@item.CreateDate</td>
+                                    <td class="text-center">@item.UnitsInStock</td>
+                                    <td class="text-center">@item.BestSeller</td>
+                                    <td class="text-center">
+                                        <label class="switch">
+                                            @if (item.Active == true)
+                                            {
+                                                <input class="changeStatus" data-id="@item.ProductId" data-controller="Products" type="checkbox" checked>
+                                            }
+                                            else
+                                            {
+                                                <input class="changeStatus" data-id="@item.ProductId" data-controller="Products" type="checkbox">
+                                            }
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
+                                            <a href="@Url.Action("Edit", "Products", new { id = item.ProductId })" class="text-white"><i class="fas fa-pen"></i></a>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                            <a href="@Url.Action("Delete", "Products", new { id = item.ProductId })" class="text-white"><i class="far fa-trash-alt"></i></a>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Rendering engine</th>
+                                        <th>Browser</th>
+                                        <th>Platform(s)</th>
+                                        <th>Engine version</th>
+                                        <th>CSS grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Trident</td>
+                                        <td>
+                                            Internet
+                                            Explorer 4.0
+                                        </td>
+                                        <td>Win 95+</td>
+                                        <td> 4</td>
+                                        <td>X</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Trident</td>
+                                        <td>
+                                            Internet
+                                            Explorer 5.0
+                                        </td>
+                                        <td>Win 95+</td>
+                                        <td>5</td>
+                                        <td>C</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
             </div>
         </div>
     </div>
