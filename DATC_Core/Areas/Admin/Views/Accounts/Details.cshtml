@@ -37,7 +37,7 @@
                         <td scope="col">  @Html.DisplayFor(model => model.AccountId)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.FullName )</th>
+                        <th scope="col"> Họ và tên</th>
                         <td scope="col">  @Html.DisplayFor(model => model.FullName)</td>
                     <tr>
                     <tr>
@@ -45,24 +45,39 @@
                         <td scope="col">  @Html.DisplayFor(model => model.Email)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Phone)</th>
+                        <th scope="col"> Số điện thoại</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Phone)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Password)</th>
+                        <th scope="col"> Mật khẩu</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Password)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.CreateDate)</th>
+                        <th scope="col"> Ngày tạo</th>
                         <td scope="col">  @Html.DisplayFor(model => model.CreateDate)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.LastLogin)</th>
+                        <th scope="col"> Thay đổi lần cuối</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.ModifiedDate)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> Đăng nhập lần cuối</th>
                         <td scope="col">  @Html.DisplayFor(model => model.LastLogin)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Active)</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.Active)</td>
+                        <th scope="col"> Trạng thái</th>
+                        <td scope="col"> 
+                            @* @Html.DisplayFor(model => model.Active) *@
+                            
+                                    @if (Model.Active==true)
+                                    {
+                                        <span>Đã kích hoạt</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Chưa kích hoạt</span>
+                                    }
+                            </td>
                     </tr>
                 </table>
             </div>

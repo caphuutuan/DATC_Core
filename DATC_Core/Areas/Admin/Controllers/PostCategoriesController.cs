@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DATC_Core.Models;
+using DATC_Core.Helper;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -13,18 +15,20 @@ namespace DATC_Core.Areas.Admin.Controllers
     public class PostCategoriesController : Controller
     {
         private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
+        public INotyfService _notyfService { get; }
 
-        public PostCategoriesController(DATCCoreMineDBContext context)
+        public PostCategoriesController(DATCCoreMineDBContext context, INotyfService notyfService)
         {
             db = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/PostCategories
         public async Task<IActionResult> Index()
         {
-              return db.PostCategorys != null ? 
-                          View(await db.PostCategorys.ToListAsync()) :
-                          Problem("Entity set 'DATCCoreMineDBContext.PostCategorys'  is null.");
+            return db.PostCategorys != null ?
+                        View(await db.PostCategorys.ToListAsync()) :
+                        Problem("Entity set 'DATCCoreMineDBContext.PostCategorys'  is null.");
         }
 
         // GET: Admin/PostCategories/Details/5
@@ -48,8 +52,8 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/PostCategories/Create
         public IActionResult Create()
         {
-            ViewBag.listCat = new SelectList(db.PostCategorys.Where(m => m.Published == true), "CateId", "CateName", 0);
-            ViewBag.listLevel = new SelectList(db.PostCategorys.Where(m => m.Published == true), "Ordering", "CateName", 0);
+            ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
+            ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
             return View();
         }
 
@@ -58,15 +62,29 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Cover")] PostCategory postCategory)
+        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Cover")] PostCategory postCategory/*, IFormFile fCover*/)
         {
-            ViewBag.listCat = new SelectList(db.PostCategorys.Where(m => m.Published == true), "CateId", "CateName", 0);
-            ViewBag.listLevel = new SelectList(db.PostCategorys.Where(m => m.Published == true), "Ordering", "CateName", 0);
+            ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
+            ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
 
             if (ModelState.IsValid)
             {
+                postCategory.CateName = Utilities.ToTitleCase(postCategory.CateName);
+                //if (fCover != null)
+                //{
+                //    string extension = Path.GetExtension(fCover.FileName);
+                //    string image = Utilities.SEOUrl(postCategory.CateName) + extension;
+                //    postCategory.Cover = await Utilities.UploadFile(fCover, @"postCatgories", image.ToLower());
+                //}
+                //if (string.IsNullOrEmpty(postCategory.Cover))
+                //{
+                //    postCategory.Cover = "placeholder-image.jpg";
+                //}
+                postCategory.Description = postCategory.Cover;
+                postCategory.Levels = 0;
                 db.Add(postCategory);
                 await db.SaveChangesAsync();
+                _notyfService.Success("Thêm mới Danh mục bài viết", 3);
                 return RedirectToAction(nameof(Index));
             }
             return View(postCategory);
@@ -85,6 +103,8 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
+            ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
             return View(postCategory);
         }
 
@@ -93,7 +113,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Cover")] PostCategory postCategory)
+        public async Task<IActionResult> Edit(int id, [Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Cover")] PostCategory postCategory/*, IFormFile fCover*/)
         {
             if (id != postCategory.CateId)
             {
@@ -104,8 +124,21 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
+                    postCategory.CateName = Utilities.ToTitleCase(postCategory.CateName);
+                    //if (fCover != null)
+                    //{
+                    //    string extension = Path.GetExtension(fCover.FileName);
+                    //    string image = Utilities.SEOUrl(postCategory.CateName) + extension;
+                    //    postCategory.Cover = await Utilities.UploadFile(fCover, @"postCatgories", image.ToLower());
+                    //}
+                    //if (string.IsNullOrEmpty(postCategory.Cover))
+                    //{
+                    //    postCategory.Cover = "placeholder-image.jpg";
+                    //}
                     db.Update(postCategory);
                     await db.SaveChangesAsync();
+                    _notyfService.Success("Cập nhật Danh mục bài viết ID = " + id, 3);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,6 +153,8 @@ namespace DATC_Core.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
+            ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
             return View(postCategory);
         }
 
@@ -155,14 +190,15 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 db.PostCategorys.Remove(postCategory);
             }
-            
+
             await db.SaveChangesAsync();
+            _notyfService.Success("Xoá Danh mục bài viết ID = " + id, 3);
             return RedirectToAction(nameof(Index));
         }
 
         private bool PostCategoryExists(int id)
         {
-          return (db.PostCategorys?.Any(e => e.CateId == id)).GetValueOrDefault();
+            return (db.PostCategorys?.Any(e => e.CateId == id)).GetValueOrDefault();
         }
 
 

@@ -29,7 +29,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="cate1" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center no-sort" style="width:3rem;">ID</th>
@@ -53,8 +53,12 @@
                                     </a>
                                 </td>
                                 <td>  @Html.DisplayFor(modelItem => item.Description)</td>
-                                <td>  @Html.DisplayFor(modelItem => item.ParentId)</td>
-                                <td>  @Html.DisplayFor(modelItem => item.Levels)</td>   
+                                <td>
+                                    <a href="~/Admin/PostCategories/Details/@item.ParentId">
+                                        @Html.DisplayFor(modelItem => item.Parent.CateName)
+                                    </a>
+                                </td>
+                                <td>  @Html.DisplayFor(modelItem => item.Levels)</td>
                                 <td>  @Html.DisplayFor(modelItem => item.Ordering)</td>
                                 <td>  @Html.DisplayFor(modelItem => item.Cover)</td>
 

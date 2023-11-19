@@ -16,13 +16,13 @@
                     <div class="col-4">
                         <div class="float-right pt-1">
                             <button type="button" class="btn btn-primary btn-sm">
-                                <a href="~/Admin/AdminRoles/Edit/@Model.CustomerId" class="text-white"><i class="fas fa-pen fa-xs"></i>&nbsp; Sửa</a>
+                                <a href="~/Admin/Customers/Edit/@Model.CustomerId" class="text-white"><i class="fas fa-pen fa-xs"></i>&nbsp; Sửa</a>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm">
-                                <a href="~/Admin/AdminRoles/DelTrash/@Model.CustomerId" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp;Xóa</a>
+                                <a href="~/Admin/Customers/Delete/@Model.CustomerId" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp;Xóa</a>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm">
-                                <a href="~/Admin/AdminRoles/Index/@Model.CustomerId" class="text-white"><i class="fas fa-door-open fa-xs"></i>&nbsp;Thoát</a>
+                                <a href="~/Admin/Customers/Index/@Model.CustomerId" class="text-white"><i class="fas fa-door-open fa-xs"></i>&nbsp;Thoát</a>
                             </button>
                         </div>
                     </div>
@@ -74,11 +74,16 @@
                     </tr>
                     <tr>
                         <th scope="col"> @Html.DisplayNameFor(model => model.Avatar)</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.Avatar)</td>
+                        @* <td scope="col"> <img src="~/images/customers/@Model.Avatar" alt="avatar" /></td> *@
+                        <td scope="col"> <img src="~/images/customers/@Model.Avatar" width="auto" height="150" alt="avatar" /></td>
                     </tr>
                     <tr>
                         <th scope="col"> @Html.DisplayNameFor(model => model.CreateDate)</th>
                         <td scope="col">  @Html.DisplayFor(model => model.CreateDate)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> @Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.ModifiedDate)</td>
                     </tr>
                     <tr>
                         <th scope="col"> @Html.DisplayNameFor(model => model.LastLogin)</th>
@@ -86,7 +91,17 @@
                     </tr>
                     <tr>
                         <th scope="col"> @Html.DisplayNameFor(model => model.Active)</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.Active)</td>
+                        <td scope="col">
+                                    @if (Model.Active == true)
+                                    {
+                                <p>Đã kích hoạt</p>
+                                    }
+                                    else
+                                    {
+                                <p>Chưa kích hoạt</p>
+
+                                    }
+                        </td>
                     </tr>
                 </table>
             </div>

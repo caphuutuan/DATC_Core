@@ -20,7 +20,7 @@
                                 <a href="~/Admin/Products/Edit/@Model.ProductId" class="text-white"><i class="fas fa-pen fa-xs"></i>&nbsp; Sửa</a>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm">
-                                <a href="~/Admin/Products/DelTrash/@Model.ProductId" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp;Xóa</a>
+                                <a href="~/Admin/Products/Delete/@Model.ProductId" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp;Xóa</a>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm">
                                 <a href="~/Admin/Products/Index/@Model.ProductId" class="text-white"><i class="fas fa-door-open fa-xs"></i>&nbsp;Thoát</a>
@@ -34,67 +34,104 @@
                 <table class="table table-bordered table-hover">
 
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.ProductId)</th>
+                        <th scope="col"> ID</th>
                         <td scope="col">  @Html.DisplayFor(model => model.ProductId)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.ProductName )</th>
+                        <th scope="col"> Tên sản phẩm</th>
                         <td scope="col">  @Html.DisplayFor(model => model.ProductName)</td>
                     <tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.ShortDesc)</th>
+                        <th scope="col"> Mô tả</th>
                         <td scope="col">  @Html.DisplayFor(model => model.ShortDesc)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Description )</th>
+                        <th scope="col"> Chi tiết</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Description)</td>
                     <tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.CateId)</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.CateId)</td>
+                        <th scope="col"> Danh mục</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Cate.CateName)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Price )</th>
+                        <th scope="col"> Giá</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Price)</td>
                     <tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Discount)</th>
+                        <th scope="col"> Giảm giá</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Discount)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Thumb )</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.Thumb)</td>
+                        <th scope="col"> Ảnh bìa</th>
+                        <td scope="col">
+                            <img width="200" src="~/images/products/@Model.Thumb" alt="@Model.Title" />
+                        </td>
                     <tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Video)</th>
+                        <th scope="col"> Video</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Video)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.CreateDate )</th>
+                        <th scope="col"> Ngày tạo</th>
                         <td scope="col">  @Html.DisplayFor(model => model.CreateDate)</td>
                     <tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                        <th scope="col"> Lần chỉnh sửa cuối</th>
                         <td scope="col">  @Html.DisplayFor(model => model.ModifiedDate)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.BestSeller )</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.BestSeller)</td>
+                        <th scope="col"> Bán chạy</th>
+                        <td scope="col">
+                                                                    @if (Model.BestSeller == true)
+                                                                    {
+                                <span>Có</span>
+                                                                    }
+                                                                    else if (Model.BestSeller == false)
+                                                                    {
+                                <span>Không</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                <span>Không xác định</span>
+                                                                    }
+                        </td>
                     <tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.IsHome)</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.IsHome)</td>
+                        <th scope="col"> Trang đầu</th>
+                        <td scope="col">
+                                                                            @if (Model.BestSeller == true)
+                                                                            {
+                                <span>Có</span>
+                                                                            }
+                                                                            else if (Model.BestSeller == false)
+                                                                            {
+                                <span>Không</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                <span>Không xác định</span>
+                                                                            }
+                        </td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Active )</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.Active)</td>
+                        <th scope="col"> Trạng thái</th>
+                        <td scope="col">
+                                                                            @if (Model.Active == true)
+                                                                            {
+                                <span>Đã kích hoạt</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                <span>Chưa kích hoạt</span>
+                                                                            }
+                        </td>
                     <tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Title)</th>
+                        <th scope="col"> Tiêu đề</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Title)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.Tags )</th>
+                        <th scope="col"> Nhãn</th>
                         <td scope="col">  @Html.DisplayFor(model => model.Tags)</td>
                     <tr>
                     <tr>
@@ -110,7 +147,7 @@
                         <td scope="col">  @Html.DisplayFor(model => model.MetaKey)</td>
                     </tr>
                     <tr>
-                        <th scope="col"> @Html.DisplayNameFor(model => model.UnitsInStock)</th>
+                        <th scope="col"> Tồn kho</th>
                         <td scope="col">  @Html.DisplayFor(model => model.UnitsInStock)</td>
                     </tr>
                 </table>

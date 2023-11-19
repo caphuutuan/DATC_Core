@@ -28,7 +28,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="cate1" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center no-sort" style="width:3rem;">ID</th>
@@ -47,7 +47,7 @@
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </a>
                                 </td>
-                                <td>  @Html.DisplayFor(modelItem => item.Image)</td>
+                                <td>  <img src="~/images/customers/@item.Image" style="width: 130px;object-fit: contain;" alt="avatar" /></td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
                                         <a href="@Url.Action("Edit", "Payments", new { id = item.PaymentId })" class="text-white"><i class="fas fa-pen"></i></a>
