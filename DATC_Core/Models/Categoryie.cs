@@ -7,6 +7,7 @@ namespace DATC_Core.Models
     {
         public Categoryie()
         {
+            InverseParent = new HashSet<Categoryie>();
             Products = new HashSet<Product>();
         }
 
@@ -25,6 +26,8 @@ namespace DATC_Core.Models
         public string? Cover { get; set; }
         public string? SchemaMarkup { get; set; }
 
+        public virtual Categoryie? Parent { get; set; }
+        public virtual ICollection<Categoryie> InverseParent { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

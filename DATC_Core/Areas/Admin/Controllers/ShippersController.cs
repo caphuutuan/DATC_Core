@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DATC_Core.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -13,10 +14,12 @@ namespace DATC_Core.Areas.Admin.Controllers
     public class ShippersController : Controller
     {
         private readonly DATCCoreMineDBContext _context;
+        public INotyfService _notyfService { get; }
 
-        public ShippersController(DATCCoreMineDBContext context)
+        public ShippersController(DATCCoreMineDBContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/Shippers
@@ -62,6 +65,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 _context.Add(shipper);
                 await _context.SaveChangesAsync();
+                _notyfService.Success("Thêm mới ship");
                 return RedirectToAction(nameof(Index));
             }
             return View(shipper);
@@ -101,6 +105,7 @@ namespace DATC_Core.Areas.Admin.Controllers
                 {
                     _context.Update(shipper);
                     await _context.SaveChangesAsync();
+                _notyfService.Success("Cập nhật ship");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -152,6 +157,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             }
             
             await _context.SaveChangesAsync();
+                _notyfService.Success("Xoá ship");
             return RedirectToAction(nameof(Index));
         }
 

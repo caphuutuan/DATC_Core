@@ -30,14 +30,13 @@
             <!-- /.card-header -->
 
             <div class="card-body">
-                <table id="cate1" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width:3rem;">ID</th>
+                            <th class="text-center " style="width:3rem;">ID</th>
                             <th class="no-sort">Tên danh mục</th>
                             <th class="no-sort">Mô tả</th>
                             <th class="">Cấp cha</th>
-                            <th class="">Thumb</th>
                             <th class="no-sort text-center" style="width:10rem">Action</th>
                         </tr>
                     </thead>
@@ -49,7 +48,6 @@
                                 <td><a href="~/Admin/AdminCategories/Details/@Html.DisplayFor(modelItem => item.CateId)">@Html.DisplayFor(modelItem => item.CateName)</a>  </td>
                                 <td>  @Html.DisplayFor(modelItem => item.Description)</td>
                                 <td>  @Html.DisplayFor(modelItem => item.ParentId)</td>
-                                <td>  @Html.DisplayFor(modelItem => item.Thumb)</td>
                                 <td class="text-center">
                                     <label class="switch">
                                         @if (item.Published == true)
@@ -66,7 +64,7 @@
                                         <a href="@Url.Action("Edit", "AdminCategories", new { id = item.CateId })" class="text-white"><i class="fas fa-pen"></i></a>
                                     </button>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa">
-                                        <a href="@Url.Action("DelTrash", "AdminCategories", new { id = item.CateId })" class="text-white"><i class="far fa-trash-alt"></i></a>
+                                        <a href="@Url.Action("Delete", "AdminCategories", new { id = item.CateId })" class="text-white"><i class="far fa-trash-alt"></i></a>
                                     </button>
                                 </td>
                             </tr>
