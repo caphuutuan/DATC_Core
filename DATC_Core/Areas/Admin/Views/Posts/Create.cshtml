@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -46,13 +46,13 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Mô tả</label>
-                                    @Html.EditorFor(model => model.Scontents, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.Scontents, new { htmlAttributes = new { @class = "form-control", @id="summernote"  } })
                                     @Html.ValidationMessageFor(model => model.Scontents, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Nội dung</label>
-                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control", @id="summernote"  } })
                                     @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger"  })
                                 </div>
 
@@ -70,32 +70,15 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Danh mục</label>
-                                    @Html.EditorFor(model => model.CateId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @* @Html.EditorFor(model => model.CateId, new { htmlAttributes = new { @class = "form-control" } }) *@
+                                    @Html.DropDownList("CateId", ViewBag.cateList as SelectList, "Chọn thể loại", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
                                 </div>
-                                @*
-                            <div class="form-group">
-                            <label for="exampleInputFile">Hình ảnh</label>
-                            <div class="input-group">
-                            <div class="custom-file">
-                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
-                            </div>
-                            <div class="input-group-append">
-                            <input type="button" value="Tải ảnh" onclick="BrowseServer('txtImage');" />
-                            </div>
-                            </div>
-                            </div>*@
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Hình ảnh</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
-
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                    </div>
+                                    <label for="Thumb">Thumb</label>
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
+                                    @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                             </div>
@@ -110,13 +93,13 @@
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Nổi bật</label>
-                                @Html.DropDownListFor(model => model.IsHot,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" } }, "[Nổi bật]" , new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.IsHot,  new[] { new SelectListItem { Value = "true", Text = "Có" },new SelectListItem { Value = "false", Text = "Không" } }, "[Nổi bật]" , new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.IsHot, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Mới</label>
-                                @Html.DropDownListFor(model => model.IsNew,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" }}, "[Mới]", new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.IsNew,  new[] { new SelectListItem { Value = "true", Text = "Có" },new SelectListItem { Value = "false", Text = "Không" }}, "[Mới]", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.IsNew, "", new { @class = "text-danger" })
                             </div>
 

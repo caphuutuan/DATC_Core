@@ -6,7 +6,8 @@
 }
 
 
-@using (Html.BeginForm())
+
+@using (Html.BeginForm("Create", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -76,7 +77,7 @@
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Trạng thái</label>
-                                @Html.DropDownListFor(model => model.Active, new[] { new SelectListItem { Value = "1", Text = "Hoạt động" }, new SelectListItem { Value = "2", Text = "Chưa hoạt động" } } ,"[Chọn trạng thái]", new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.Active, new[] { new SelectListItem { Value = "true", Text = "Hoạt động" }, new SelectListItem { Value = "false", Text = "Chưa hoạt động" } } ,"[Chọn trạng thái]", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
                             </div>
                         </div>

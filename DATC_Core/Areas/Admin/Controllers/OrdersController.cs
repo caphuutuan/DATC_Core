@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DATC_Core.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -13,15 +14,18 @@ namespace DATC_Core.Areas.Admin.Controllers
     public class OrdersController : Controller
     {
         private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
+        public INotyfService _notyfService { get; }
 
-        public OrdersController(DATCCoreMineDBContext context)
+        public OrdersController(DATCCoreMineDBContext context, INotyfService notyfService)
         {
             db = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/Orders
         public async Task<IActionResult> Index()
         {
+            ViewBag.countOrder = db.Orders.Where(m => m.TransactStatusId == 1).Count();
             var dATCCoreMineDBContext = db.Orders.Include(o => o.Customer).Include(o => o.Payment).Include(o => o.TransactStatus);
             return View(await dATCCoreMineDBContext.ToListAsync());
         }
@@ -167,14 +171,14 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 db.Orders.Remove(order);
             }
-            
+
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool OrderExists(int id)
         {
-          return (db.Orders?.Any(e => e.OrderId == id)).GetValueOrDefault();
+            return (db.Orders?.Any(e => e.OrderId == id)).GetValueOrDefault();
         }
 
         public decimal Revenue()

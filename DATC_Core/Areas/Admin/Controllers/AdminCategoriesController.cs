@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DATC_Core.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using DATC_Core.Helper;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -14,18 +15,22 @@ namespace DATC_Core.Areas.Admin.Controllers
     public class AdminCategoriesController : Controller
     {
         private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
+        public INotyfService _notyfService { get; }
 
-        public AdminCategoriesController(DATCCoreMineDBContext context)
+        public AdminCategoriesController(DATCCoreMineDBContext context, INotyfService notyfService)
         {
             db = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/AdminCategories
         public async Task<IActionResult> Index()
         {
-              return db.Categoryies != null ? 
-                          View(await db.Categoryies.ToListAsync()) :
-                          Problem("Entity set 'DATCCoreMineDBContext.Categoryies'  is null.");
+            ViewBag.countProdCate = db.Categoryies.Count();
+
+            return db.Categoryies != null ?
+                        View(await db.Categoryies.ToListAsync()) :
+                        Problem("Entity set 'DATCCoreMineDBContext.Categoryies'  is null.");
         }
 
         // GET: Admin/AdminCategories/Details/5
@@ -49,8 +54,16 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/AdminCategories/Create
         public IActionResult Create()
         {
-            ViewBag.listCat = new SelectList(db.Categoryies.Where(m => m.Published == true), "CateId", "CateName", 0);
-            ViewBag.listOrder = new SelectList(db.Categoryies.Where(m => m.Published == true), "Ordering", "CateName", 0);
+            ViewBag.listCat = new SelectList(db.Categoryies, "CateId", "CateName", 0);
+            ViewBag.listOrder = new SelectList(db.Categoryies, "Ordering", "CateName", 0);
+            //ViewBag.listStatus = new SelectList(db.Categoryies, "Ordering", "CateName", 0);
+
+            List<SelectListItem> lsStatus = new List<SelectListItem>();
+            lsStatus.Add(new SelectListItem() { Text = "Hiển thị", Value = "true" });
+            lsStatus.Add(new SelectListItem() { Text = "Không hiển thị", Value = "false" });
+
+            //ViewData["DanhMuc"] = new SelectList(db.Categoryies, "CateId", "CateName");
+
             return View();
         }
 
@@ -59,21 +72,46 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie)
+        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie/*, IFormFile fThumb, IFormFile fCover*/)
         {
-            ViewBag.listCat = new SelectList(db.Categoryies.Where(m => m.Published == true), "CateId", "CateName", 0);
-            ViewBag.listOrder = new SelectList(db.Categoryies.Where(m => m.Published == true), "Ordering", "CateName", 0);
+            ViewBag.listCat = new SelectList(db.Categoryies, "CateId", "CateName", 0);
+            ViewBag.listOrder = new SelectList(db.Categoryies, "Ordering", "CateName", 0);
+            //ViewData["DanhMuc"] = new SelectList(db.Categoryies, "CateId", "CateName");
             if (ModelState.IsValid)
             {
-                if (categoryie.ParentId==0)
-                {
-                    categoryie.ParentId = 0;
-                }
 
-                String Slug = XString.ToAscii(categoryie.CateName);        
+                categoryie.CateName = Utilities.ToTitleCase(categoryie.CateName);
+                //if (fThumb != null)
+                //{
+                //    string extension = Path.GetExtension(fThumb.FileName);
+                //    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
+                //    categoryie.Thumb = await Utilities.UploadFile(fThumb, @"categories", image.ToLower());
+                //}
+                //if (string.IsNullOrEmpty(categoryie.Thumb))
+                //{
+                //    categoryie.Thumb = "placeholder-image.jpg";
+                //}
 
+                //if (fCover != null)
+                //{
+                //    string extension = Path.GetExtension(fCover.FileName);
+                //    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
+                //    categoryie.Cover = await Utilities.UploadFile(fCover, @"categories", image.ToLower());
+                //}
+                //if (string.IsNullOrEmpty(categoryie.Cover))
+                //{
+                //    categoryie.Cover = "placeholder-image.jpg";
+                //}
+
+                String Slug = XString.ToAscii(categoryie.CateName);
+                categoryie.Alias = Utilities.SEOUrl(categoryie.CateName);
+                categoryie.MetaKey = categoryie.CateName;
+                categoryie.MetaDesc = categoryie.CateName;
+                categoryie.Title = categoryie.CateName;
+                categoryie.Description = categoryie.CateName;
                 db.Add(categoryie);
                 await db.SaveChangesAsync();
+                _notyfService.Success("Thêm mới Danh mục thành công", 3);
                 return RedirectToAction(nameof(Index));
             }
             return View(categoryie);
@@ -82,8 +120,9 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/AdminCategories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewBag.listCat = new SelectList(db.Categoryies.Where(m => m.Published == true), "CateId", "CateName", 0);
-            ViewBag.listOrder = new SelectList(db.Categoryies.Where(m => m.Published == true), "Ordering", "CateName", 0);
+            ViewBag.listCat = new SelectList(db.Categoryies, "CateId", "CateName", 0);
+            ViewBag.listOrder = new SelectList(db.Categoryies, "Ordering", "CateName", 0);
+            //ViewData["DanhMuc"] = new SelectList(db.Categoryies, "CateId", "CateName");
             if (id == null || db.Categoryies == null)
             {
                 return NotFound();
@@ -102,10 +141,12 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie)
+        public async Task<IActionResult> Edit(int id, [Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie/*,IFormFile fThumb, IFormFile fCover*/)
         {
-            ViewBag.listCat = new SelectList(db.Categoryies.Where(m => m.Published == true), "CateId", "CateName", 0);
-            ViewBag.listOrder = new SelectList(db.Categoryies.Where(m => m.Published == true), "Ordering", "CateName", 0);
+            ViewBag.listCat = new SelectList(db.Categoryies, "CateId", "CateName", 0);
+            ViewBag.listOrder = new SelectList(db.Categoryies, "Ordering", "CateName", 0);
+            //ViewData["DanhMuc"] = new SelectList(db.Categoryies, "CateId", "CateName");
+
             if (id != categoryie.CateId)
             {
                 return NotFound();
@@ -115,8 +156,23 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
+                    categoryie.CateName = Utilities.ToTitleCase(categoryie.CateName);
+                    //if (fThumb != null)
+                    //{
+                    //    string extension = Path.GetExtension(fThumb.FileName);
+                    //    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
+                    //    categoryie.Thumb = await Utilities.UploadFile(fThumb, @"categories", image.ToLower());
+                    //}
+                    //if (string.IsNullOrEmpty(categoryie.Thumb))
+                    //{
+                    //    categoryie.Thumb = "placeholder-image.jpg";
+                    //}
+
+
                     db.Update(categoryie);
                     await db.SaveChangesAsync();
+                    _notyfService.Success("Cập nhật Danh mục thành công, ID = " + id, 3);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -166,20 +222,21 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 db.Categoryies.Remove(categoryie);
             }
-            
+
             await db.SaveChangesAsync();
+            _notyfService.Success("Xoá Danh mục thành công, ID = " + id, 3);
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryieExists(int id)
         {
-          return (db.Categoryies?.Any(e => e.CateId == id)).GetValueOrDefault();
+            return (db.Categoryies?.Any(e => e.CateId == id)).GetValueOrDefault();
         }
 
         // Trash
         public ActionResult Trash()
         {
-            var list = db.Categoryies.Where(m => m.Published == true).ToList();
+            var list = db.Categoryies.ToList();
             return View(list);
         }
         //public ActionResult DelTrash(int id)

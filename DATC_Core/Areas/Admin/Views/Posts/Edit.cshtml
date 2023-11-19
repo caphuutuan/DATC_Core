@@ -40,6 +40,8 @@
 
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.PostId)
+                                @Html.HiddenFor(model => model.Thumb)
+                                @Html.HiddenFor(model => model.CreateDate)
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Tựa đề</label>
@@ -49,13 +51,13 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Mô tả</label>
-                                    @Html.EditorFor(model => model.Scontents, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.Scontents, new { htmlAttributes = new { @class = "form-control"  } })
                                     @Html.ValidationMessageFor(model => model.Scontents, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Nội dung</label>
-                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control"  } })
                                     @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger"  })
                                 </div>
 
@@ -73,32 +75,16 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Danh mục</label>
-                                    @Html.EditorFor(model => model.CateId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DropDownList("CateId", ViewBag.cateList as SelectList, "Chọn thể loại", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
                                 </div>
-                                @*
-                            <div class="form-group">
-                            <label for="exampleInputFile">Hình ảnh</label>
-                            <div class="input-group">
-                            <div class="custom-file">
-                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
-                            </div>
-                            <div class="input-group-append">
-                            <input type="button" value="Tải ảnh" onclick="BrowseServer('txtImage');" />
-                            </div>
-                            </div>
-                            </div>*@
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Hình ảnh</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
-
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                    </div>
+                                    <label for="exampleInputFile">Thumb</label>
+                                    <br>
+                                    <img class="pb-3" src="~/images/posts/@Model.Thumb" width="auto" height="150" alt="avatar" />
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
+                                    @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                             </div>

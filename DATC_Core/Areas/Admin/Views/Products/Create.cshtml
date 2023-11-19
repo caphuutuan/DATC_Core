@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -41,7 +41,7 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Tên sản phẩm</label>
-                                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control"} })
                                     @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger"  })
                                 </div>
 
@@ -53,63 +53,39 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Chi tiết</label>
-                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control"  } })
                                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Danh mục</label>
-                                    @Html.EditorFor(model => model.CateId, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Danh mục</label>
-                                    @Html.DropDownListFor(model => model.CateId, new[] { new SelectListItem { Value = "0", Text = "Loại a" },new SelectListItem { Value = "1", Text = "Loại b" } } , new { @class = "form-control" } )
-                                   
-                                    @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
-                                </div>
-
-                                <div class="form-group">
                                     <label class="control-label col-md-2">Nhãn</label>
-                                    @Html.DropDownListFor(model => model.Tags, new[] { new SelectListItem { Value = "0", Text = "Loại a" },new SelectListItem { Value = "1", Text = "Loại b" } } , new { @class = "form-control" } )
+                                    @Html.DropDownListFor(model=>model.Tags, ViewBag.cateList as SelectList, "[Chọn tags]", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">MetaKey</label>
-                                    @Html.EditorFor(model => model.MetaKey, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.MetaKey, new { htmlAttributes = new { @class = "form-control"  } })
                                     @Html.ValidationMessageFor(model => model.MetaKey, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">MetaDesc</label>
-                                    @Html.EditorFor(model => model.MetaDesc, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.MetaDesc, new { htmlAttributes = new { @class = "form-control"  } })
                                     @Html.ValidationMessageFor(model => model.MetaDesc, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Thumb</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
-
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                    </div>
+                                    <label for="Thumb">Thumb</label>
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
+                                    @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Video</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            @Html.TextBoxFor(x => x.Video, new { @id = "txtImage", @class = "form-control" })
-
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                    </div>
+                                    <label for="Video">Video</label>
+                                    <br>
+                                    <input name="fVideo" type="file" class="form-control-file" asp-for="Video">
+                                    @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger"  })
                                 </div>
                             </div>
                         </div>
@@ -123,13 +99,26 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="control-label col-md-5">Danh mục</label>
+                                @Html.DropDownListFor(model=>model.CateId, ViewBag.cateList as SelectList, "Chọn thể loại", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
+                            </div>
+
+                            @*<div class="form-group">
+                        <label class="control-label col-md-5">Danh mục</label>
+                        <select class="form-control select2" asp-items="ViewBag.DanhMuc" asp-for="CateId">
+                        <option selected="selected" disabled>Chọn danh mục</option>
+                        </select>
+                        </div> *@
+
+                            <div class="form-group">
                                 <label class="control-label col-md-5">Alias</label>
                                 @Html.EditorFor(model => model.Alias, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Alias, "", new { @class = "text-danger"  })
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-5">Giá</label>
+                                <label class="control-label col-md-5">Giá bán</label>
                                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger"  })
                             </div>
@@ -148,13 +137,13 @@
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Trang đầu</label>
-                                @Html.DropDownListFor(model => model.IsHome,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" } }, "[Trang đầu]" , new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.IsHome,  new[] { new SelectListItem { Value = "true", Text = "Có" },new SelectListItem { Value = "false", Text = "Không" } }, "[Trang đầu]" , new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.IsHome, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Bán chạy</label>
-                                @Html.DropDownListFor(model => model.BestSeller,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" }}, "[Bán chạy]", new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.BestSeller,  new[] { new SelectListItem { Value = "true", Text = "Có" },new SelectListItem { Value = "false", Text = "Không" }}, "[Bán chạy]", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.BestSeller, "", new { @class = "text-danger" })
                             </div>
 

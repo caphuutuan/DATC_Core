@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DATC_Core.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -13,15 +15,18 @@ namespace DATC_Core.Areas.Admin.Controllers
     public class AccountsController : Controller
     {
         private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
+        public INotyfService _notyfService { get; }
 
-        public AccountsController(DATCCoreMineDBContext context)
+        public AccountsController(DATCCoreMineDBContext context, INotyfService notyfService)
         {
             db = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/Accounts
         public async Task<IActionResult> Index()
         {
+            ViewBag.countAccount = db.Accounts.Where(m => m.Active == true).Count();
             var dATCCoreMineDBContext = db.Accounts.Include(a => a.Role);
             return View(await dATCCoreMineDBContext.ToListAsync());
         }
@@ -63,12 +68,16 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountId,Phone,Email,Salt,Password,FullName,Active,RoleId,LastLogin,CreateDate")] Account account)
+        public async Task<IActionResult> Create([Bind("AccountId,Phone,Email,Salt,Password,FullName,Active,RoleId,LastLogin,CreateDate, ModifiedDate")] Account account)
         {
             if (ModelState.IsValid)
             {
+                account.Active = false;
+                account.CreateDate = DateTime.Now;
+                account.Password = "1";
                 db.Add(account);
                 await db.SaveChangesAsync();
+                _notyfService.Success("Thêm mới Account thành công", 3);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoleId"] = new SelectList(db.Roles, "RoleId", "RoleId", account.RoleId);
@@ -97,7 +106,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AccountId,Phone,Email,Salt,Password,FullName,Active,RoleId,LastLogin,CreateDate")] Account account)
+        public async Task<IActionResult> Edit(int id, [Bind("AccountId,Phone,Email,Salt,Password,FullName,Active,RoleId,LastLogin,CreateDate, ModifiedDate")] Account account)
         {
             if (id != account.AccountId)
             {
@@ -108,8 +117,11 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
+                    account.ModifiedDate = DateTime.Now;
                     db.Update(account);
                     await db.SaveChangesAsync();
+                    _notyfService.Success("Cập nhật Account ID = " + id + " thành công", 3);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -163,6 +175,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             }
 
             await db.SaveChangesAsync();
+            _notyfService.Success("Xoá Account ID = " + id + " thành công", 3);
             return RedirectToAction(nameof(Index));
         }
 
@@ -172,7 +185,6 @@ namespace DATC_Core.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[CustomAuthorizeAttribute(RoleID = "ADMIN")]
         public JsonResult changeStatus(int id)
         {
             Account account = db.Accounts.Find(id);
@@ -186,5 +198,7 @@ namespace DATC_Core.Areas.Admin.Controllers
                 active = account.Active
             });
         }
+
+
     }
 }
