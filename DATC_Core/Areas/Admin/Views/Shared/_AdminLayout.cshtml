@@ -41,7 +41,7 @@
     <link href="~/adminassets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css" rel="stylesheet" />
     <link href="~/adminassets/plugins/bs-stepper/css/bs-stepper.min.css" rel="stylesheet" />
     <link href="~/adminassets/plugins/dropzone/min/dropzone.min.css" rel="stylesheet" />
-    <link href="~/adminassets/css/gallery.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper" style="margin-top: -25px">
@@ -134,7 +134,9 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) --> *@
     <script src="~/adminassets/dist/js/pages/dashboard.js"></script>
 
-    <script src="~/adminassets/js/gallery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
     @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required:false)
 
