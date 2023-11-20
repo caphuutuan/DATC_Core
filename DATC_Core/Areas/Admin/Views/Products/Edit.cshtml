@@ -32,13 +32,15 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-
                     <div class="row">
                         <div class="col-md-9">
                             <div class="form-horizontal">
 
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.ProductId)
+                                @Html.HiddenFor(model => model.Thumb)
+                                @Html.HiddenFor(model => model.Video)
+                                @Html.HiddenFor(model => model.CreateDate)
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Tên sản phẩm</label>
@@ -60,14 +62,13 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Danh mục</label>
-                                    @Html.DropDownListFor(model => model.CateId, new[] { new SelectListItem { Value = "0", Text = "Loại a" },new SelectListItem { Value = "1", Text = "Loại b" } } , new { @class = "form-control" } )
-
+                                    @Html.DropDownList("CateId", ViewBag.cateList as SelectList, "Chọn thể loại", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Nhãn</label>
-                                    @Html.DropDownListFor(model => model.Tags, new[] { new SelectListItem { Value = "0", Text = "Loại a" },new SelectListItem { Value = "1", Text = "Loại b" } } , new { @class = "form-control" } )
+                                    @Html.DropDownList("CateId", ViewBag.cateList as SelectList, "Chọn thể loại", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger"  })
                                 </div>
 
@@ -85,27 +86,29 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputFile">Thumb</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
-
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                    </div>
+                                    <br>
+                                    <img class="pb-3" src="~/images/products/@Model.Thumb" width="auto" height="150" alt="avatar" />
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
+                                    @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputFile">Video</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            @Html.TextBoxFor(x => x.Video, new { @id = "txtImage", @class = "form-control" })
-
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                    </div>
+                                    <br>
+                                    <img class="pb-3" src="~/images/products/@Model.Video" width="auto" height="150" alt="avatar" />
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Video">
+                                    @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger"  })
                                 </div>
+
+                                @* <div class="gallery">
+                            <div class="btn_close">
+                            <i class='bx bx-x close'></i>
+                            </div>
+                            <div class="gallery_inner">
+                            <img class="gallery_img" src="~/images/products/@Model.Thumb" alt="image">
+                            </div>
+                            </div>  *@
+
                             </div>
                         </div>
 
@@ -143,13 +146,13 @@
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Trang đầu</label>
-                                @Html.DropDownListFor(model => model.IsHome,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" } }, "[Trang đầu]" , new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.IsHome,  new[] { new SelectListItem { Value = "true", Text = "Có" },new SelectListItem { Value = "false", Text = "Không" } }, "[Trang đầu]" , new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.IsHome, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Bán chạy</label>
-                                @Html.DropDownListFor(model => model.BestSeller,  new[] { new SelectListItem { Value = "0", Text = "Có" },new SelectListItem { Value = "1", Text = "Không" }}, "[Bán chạy]", new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.BestSeller,  new[] { new SelectListItem { Value = "true", Text = "Có" },new SelectListItem { Value = "false", Text = "Không" }}, "[Bán chạy]", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.BestSeller, "", new { @class = "text-danger" })
                             </div>
 
@@ -162,12 +165,115 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
+
+}
+@* @section Scripts{
+
+    <script>
+        var images = document.querySelectorAll('.image img')
+        var close = document.querySelector('.close')
+        var galleryImg = document.querySelector('.gallery_inner img')
+        var gallery = document.querySelector('.gallery')
+
+        var currentIndex = 0;
+
+        function galleryShow()
+        gallery.classList.add('show')
+                }
+
+        images.forEach((item, index) => {
+            item.addEventListener('click', function () {
+                currentIndex = index
+                galleryShow()
+            })
+        })
+
+        close.addEventListener('click', function () {
+            gallery.classList.remove('show')
+        })
+
+        document.addEventListener('keydown', function (e) {
+            if (e.keyCode == 27) {
+                gallery.classList.remove('show')
+            }
+        })
+    </script>
 }
 
+<style>
+
+    .image {
+        height: 150px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 15px 0;
+    }
+
+    img {
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: 0.25s;
+    }
+
+    .image:hover img {
+        cursor: pointer;
+    }
+
+    .gallery {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        color: #fff;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.8);
+        transition: 0.5s;
+    }
+
+    .close {
+        position: fixed;
+        top: 15px;
+        right: 25px;
+        font-size: 35px;
+    }
 
 
+        .close:hover {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 0px 0px 1px
+        }
 
+    .gallery_inner {
+        width: 70%;
+        max-height: 99%;
+    }
 
+        .gallery_inner .gallery_img {
+            height: 50%;
+            width: 50%;
+            display: flex;
+            margin: auto auto;
+        }
 
+    .show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(1);
+    }
+
+    .hide {
+        display: none;
+    }
+
+</style>
+
+ *@

@@ -47,44 +47,32 @@
 
                                  <div class="form-group">
                                     <label class="control-label col-md-2">Mô tả</label>
-                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                                    @* @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger"  }) *@
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control"  } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Từ khóa SEO</label>
                                     @Html.TextAreaFor(model => model.MetaKey, new { @class = "form-control" })
-                                    @* @Html.ValidationMessageFor(model => model.MetaKey, "", new { @class = "text-danger" }) *@
+                                    @Html.ValidationMessageFor(model => model.MetaKey, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Mô tả SEO</label>
                                     @Html.TextAreaFor(model => model.MetaDesc, new { @class = "form-control" })
-                                    @* @Html.ValidationMessageFor(model => model.MetaDesc, "", new { @class = "text-danger" }) *@
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Thumb</label>
-                                    @Html.TextAreaFor(model => model.Thumb, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.MetaDesc, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Ảnh bìa</label>
-                                    @Html.TextAreaFor(model => model.Cover, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Cover, "", new { @class = "text-danger" })
+                                    <label for="exampleInputFile">Thumb</label>
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
+                                    @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Hình ảnh</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            @Html.TextBoxFor(x => x.Thumb, new { @id = "txtImage", @class = "form-control" })
-                                        </div>
-                                        <div class="input-group-append">
-                                            <input type="button" value="Tải ảnh" onclick="BrowseServer('txtImage');" />
-                                        </div>
-                                    </div>
+                                    <label for="exampleInputFile">Cover</label>
+                                    <input name="fCover" type="file" class="form-control-file" asp-for="Cover">
+                                    @Html.ValidationMessageFor(model => model.Cover, "", new { @class = "text-danger"  })
                                 </div>
 
                             </div>
@@ -93,16 +81,22 @@
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Cấp cha</label>
-                                @* @Html.DropDownListFor(model => model.ParentId,  (SelectList)ViewBag.listCat, "[Là cấp cha]" , new { @class = "form-control" }) *@
-                                @Html.DropDownListFor(model => model.ParentId,  (SelectList)ViewBag.listCat, "[Là cấp cha]" , new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.Parent.CateName,  (SelectList)ViewBag.listCat, "[Là cấp cha]" , new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-md-10">Thứ tự hiển thị</label>
-                                @Html.DropDownListFor(model => model.Ordering, (SelectList)ViewBag.listOrder, "[Thứ tự]", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Ordering, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(model => model.Levels, (SelectList)ViewBag.listCat, "[Chọn thứ tự]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Levels, "", new { @class = "text-danger" })
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Trạng thái</label>
+                                @Html.DropDownListFor(model => model.Published, new[] { new SelectListItem { Value = "true", Text = "Hiển thị" },new SelectListItem { Value = "false", Text = "Không hiển thị" } }, "[Chọn trạng thái]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Levels, "", new { @class = "text-danger" })
+                            </div>
+
                         </div>
                     </div>
                 </div>

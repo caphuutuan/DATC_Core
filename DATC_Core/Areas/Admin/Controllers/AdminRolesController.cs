@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DATC_Core.Models;
+using System.Collections.Specialized;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -13,15 +15,18 @@ namespace DATC_Core.Areas.Admin.Controllers
     public class AdminRolesController : Controller
     {
         private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
-
-        public AdminRolesController(DATCCoreMineDBContext context)
+        public INotyfService _notyfService { get; } 
+        public AdminRolesController(DATCCoreMineDBContext context, INotyfService notyfService)
         {
             db = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/AdminRoles
         public async Task<IActionResult> Index()
         {
+            ViewBag.countRole = db.Roles.Count();
+
             return db.Roles != null ? 
                           View(await db.Roles.ToListAsync()) :
                           Problem("Entity set 'DATCCoreMineContext.Roles'  is null.");
@@ -62,6 +67,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 db.Add(role);
                 await db.SaveChangesAsync();
+                _notyfService.Success("Thêm Phân quyền mới thành công",3);
                 return RedirectToAction(nameof(Index));
             }
             return View(role);
@@ -101,6 +107,8 @@ namespace DATC_Core.Areas.Admin.Controllers
                 {
                     db.Update(role);
                     await db.SaveChangesAsync();
+                    _notyfService.Success("Cập nhật Phân quyền ID = " + id +" thành công", 3);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -152,6 +160,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             }
             
             await db.SaveChangesAsync();
+            _notyfService.Success("Xoá Phân quyền ID = " + id +" thành công", 3);
             return RedirectToAction(nameof(Index));
         }
 

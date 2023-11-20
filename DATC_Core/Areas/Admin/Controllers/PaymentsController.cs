@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DATC_Core.Models;
 using System.Drawing;
+using DATC_Core.Helper;
+using static System.Net.Mime.MediaTypeNames;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -14,18 +17,20 @@ namespace DATC_Core.Areas.Admin.Controllers
     public class PaymentsController : Controller
     {
         private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
+        public INotyfService _notyfService { get; }
 
-        public PaymentsController(DATCCoreMineDBContext context)
+        public PaymentsController(DATCCoreMineDBContext context, INotyfService notyfService)
         {
             db = context;
+            _notyfService = notyfService;
         }
 
         // GET: Admin/Payments
         public async Task<IActionResult> Index()
         {
-              return db.Payments != null ? 
-                          View(await db.Payments.ToListAsync()) :
-                          Problem("Entity set 'DATCCoreMineDBContext.Payments'  is null.");
+            return db.Payments != null ?
+                        View(await db.Payments.ToListAsync()) :
+                        Problem("Entity set 'DATCCoreMineDBContext.Payments'  is null.");
         }
 
         // GET: Admin/Payments/Details/5
@@ -57,12 +62,24 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentId,Name,Image")] Payment payment)
+        public async Task<IActionResult> Create([Bind("PaymentId,Name,Image")] Payment payment/*, IFormFile fImage*/)
         {
             if (ModelState.IsValid)
             {
+                payment.Name = Utilities.ToTitleCase(payment.Name);
+                //if (fImage != null)
+                //{
+                //    string extension = Path.GetExtension(fImage.FileName);
+                //    string image = Utilities.SEOUrl(payment.Name) + extension;
+                //    payment.Image = await Utilities.UploadFile(fImage, @"payments", image.ToLower());
+                //}
+                //if (string.IsNullOrEmpty(payment.Image))
+                //{
+                //    payment.Image= "placeholder-image.jpg";
+                //}
                 db.Add(payment);
                 await db.SaveChangesAsync();
+                _notyfService.Success("Thêm mới Phương thức thanh toán", 3);
                 return RedirectToAction(nameof(Index));
             }
             return View(payment);
@@ -89,7 +106,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,Name,Image")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,Name,Image")] Payment payment/*, IFormFile fImage*/)
         {
             if (id != payment.PaymentId)
             {
@@ -100,8 +117,21 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 try
                 {
+                    payment.Name = Utilities.ToTitleCase(payment.Name);
+                    //if (fImage != null)
+                    //{
+                    //    string extension = Path.GetExtension(fImage.FileName);
+                    //    string image = Utilities.SEOUrl(payment.Name) + extension;
+                    //    payment.Image = await Utilities.UploadFile(fImage, @"payments", image.ToLower());
+                    //}
+                    //if (string.IsNullOrEmpty(payment.Image))
+                    //{
+                    //    payment.Image = "placeholder-image.jpg";
+                    //}
                     db.Update(payment);
                     await db.SaveChangesAsync();
+                    _notyfService.Success("Cập nhật Phương thức thanh toán ID = " + id, 3);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -151,14 +181,16 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 db.Payments.Remove(payment);
             }
-            
+
             await db.SaveChangesAsync();
+            _notyfService.Success("Xoá Phương thức thanh toán ID = " + id, 3);
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool PaymentExists(int id)
         {
-          return (db.Payments?.Any(e => e.PaymentId == id)).GetValueOrDefault();
+            return (db.Payments?.Any(e => e.PaymentId == id)).GetValueOrDefault();
         }
 
         public async Task<ActionResult> TrashAsync()
@@ -168,7 +200,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         }
         public ActionResult DelTrash(int id)
         {
-           Payment payment = db.Payments.Find(id);
+            Payment payment = db.Payments.Find(id);
             if (payment == null)
             {
                 Notification.set_flash("Không tồn tại danh mục cần xóa vĩnh viễn!", "warning");

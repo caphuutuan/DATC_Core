@@ -28,14 +28,12 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="cate1" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center no-sort" style="width:3rem;">ID</th>
                             <th class="no-sort">Tựa đề</th>
-                            <th class="no-sort">SContent</th>
                             <th class="no-sort text-center" style="width:10rem">Danh mục</th>
-                            <th class="no-sort text-center" style="width:10rem">Alias</th>
                             <th class="no-sort text-center" style="width:10rem">Author</th>
                             <th class="no-sort text-center" style="width:10rem">Tags</th>
                             <th class="no-sort text-center" style="width:10rem">Views</th>
@@ -52,9 +50,11 @@
                                         @Html.DisplayFor(modelItem => item.Title)
                                     </a>
                                 </td>
-                                <td>  @Html.DisplayFor(modelItem => item.Scontents)</td>
-                                <td class="text-center">@item.CateId</td>
-                                <td class="text-center">@item.Alias</td>
+                                <td class="text-center">
+                                    <a href="~/Admin/PostCategories/Details/@Html.DisplayFor(modelItem => item.CateId)">
+                                        @Html.DisplayFor(modelItem => item.Cate.CateName)
+                                    </a>
+                                </td>
                                 <td class="text-center">@item.Author</td>
                                 <td class="text-center">@item.Tags</td>
                                 <td class="text-center">@item.Views</td>

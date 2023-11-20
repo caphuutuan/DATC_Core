@@ -31,14 +31,13 @@
             <!-- /.card-header -->
 
             <div class="card-body">
-                <table id="cate1" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center" style="width:3rem;">ID</th>
                             <th class="no-sort">Tên tài khoản</th>
                             <th class="no-sort">Email</th>
                             <th class="no-sort">Phone</th>
-                            <th class="no-sort">Password</th>
                             <th class="no-sort">Last Login</th>
                             <th class="no-sort">Ngày tạo</th>
                             <th class="no-sort text-center" style="width:10rem">Action</th>
@@ -52,7 +51,6 @@
                                 <td><a href="~/Admin/Accounts/Details/@Html.DisplayFor(modelItem => item.AccountId)">@Html.DisplayFor(modelItem => item.FullName)</a></td>
                                 <td>  @Html.DisplayFor(modelItem => item.Email)</td>
                                 <td>  @Html.DisplayFor(modelItem => item.Phone)</td>
-                                <td>  @Html.DisplayFor(modelItem => item.Password)</td>
                                 <td>  @Html.DisplayFor(modelItem => item.LastLogin)</td>
                                 <td>  @Html.DisplayFor(modelItem => item.CreateDate)</td>
                                 <td class="text-center">

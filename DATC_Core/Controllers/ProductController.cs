@@ -19,7 +19,7 @@ namespace DATC_Core.Controllers
 		}
 		public IActionResult Detail(int id)
 		{
-			var product = db.Products.Include(x => x.CateId).FirstOrDefault(x => x.ProductId == id);
+			var product = db.Products.Include(x => x.Cate).FirstOrDefault(x => x.ProductId == id);
 			if (product ==null)
 			{
 				return RedirectToAction("Index");

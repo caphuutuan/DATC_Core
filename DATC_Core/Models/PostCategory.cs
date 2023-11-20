@@ -7,6 +7,7 @@ namespace DATC_Core.Models
     {
         public PostCategory()
         {
+            InverseParent = new HashSet<PostCategory>();
             Posts = new HashSet<Post>();
         }
 
@@ -19,6 +20,8 @@ namespace DATC_Core.Models
         public bool? Published { get; set; }
         public string? Cover { get; set; }
 
+        public virtual PostCategory? Parent { get; set; }
+        public virtual ICollection<PostCategory> InverseParent { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
     }
 }

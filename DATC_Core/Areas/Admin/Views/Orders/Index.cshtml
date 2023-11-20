@@ -29,7 +29,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="cate1" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center no-sort" style="width:3rem;">ID</th>
@@ -39,7 +39,6 @@
                             <th class="no-sort text-center" style="width:10rem">Phương thức thanh toán</th>
                             <th class="no-sort text-center" style="width:10rem">Thanh toán</th>
                             <th class="no-sort text-center" style="width:10rem">Trạng thái đơn hàng</th>
-                            <th class="no-sort text-center" style="width:10rem">Note</th>
                             <th class="no-sort text-center" style="width:10rem">Action</th>
                         </tr>
                     </thead>
@@ -59,7 +58,6 @@
                                 <td class="text-center">@item.PaymentId</td>
                                 <td class="text-center">@item.Paid</td>
                                 <td class="text-center">@item.TransactStatusId</td>
-                                <td class="text-center">@item.Note</td>
                                 <td class="text-center">
                                     <label class="switch">
                                         @if (item.Deleted == true)

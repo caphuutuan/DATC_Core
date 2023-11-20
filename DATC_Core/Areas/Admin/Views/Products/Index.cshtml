@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<DATC_Core.Models.Product>
 
 @{
+    int CurrentPage = ViewBag.CurrentPage;
     ViewData["Title"] = "Quản lý Sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
@@ -12,8 +13,30 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-4">
                             <h5 class="text-csm">@ViewBag.Title</h5>
+                        </div>
+                        @* <div class="col-3">
+
+                        <label for="exampleSelectBorder">Chọn danh mục</label>
+                        <select class="custom-select form-control-border" id="exampleSelectBorder">
+                        <option>Value 1</option>
+                        <option>Value 2</option>
+                        <option>Value 3</option>
+                        </select>
+                        </div>*@
+                        
+                        <div class="col-4">
+                            <select class="form-control select2" id="txtCateID" name="txtCateID" asp-items="ViewBag.DanhMuc" style="width: 100%; height:auto !important">
+                                <option selected="selected" disabled>Chọn danh mục</option>
+                                <option value="0">All</option>
+                                @* @foreach (var item in Model)
+                                {
+                                    <option>@item.Cate.CateName</option>
+                                } *@
+                            </select>
+                            @*  <div class="form-group">
+                            </div> *@
                         </div>
                         <div class="col-4">
                             <div class="float-right pt-1">
@@ -25,20 +48,33 @@
                                 </button>
                             </div>
                         </div>
+                        @* <div class="col-md-3">
+                            <select class="form-control select2" style="width: 100%; height:auto !important">
+                                <option selected="selected" disabled>Status</option>
+                                <option value="0">All</option>
+                                @* @foreach (var item in Model)
+                                {
+                                <option>@item.Active</option>
+                                }
+                            </select>
+                            @*  <div class="form-group">
+                            </div>
+                        </div> *@
                     </div>
                 </div>
+
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="cate1" class="table table-bordered table-hover">
+                    <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center no-sort" style="width:3rem;">ID</th>
-                                <th class="text-center no-sort" style="width:10rem;">Tên sản phẩm</th>
+                                <th class="text-center" style="width:3rem;">ID</th>
+                                <th class="text-center" style="width:10rem;">Tên sản phẩm</th>
                                 <th class="no-sort text-center" style="width:10rem">Loại sản phẩm</th>
-                                <th class="no-sort text-center" style="width:5rem">Giá</th>
-                                <th class="no-sort text-center" style="width:5rem">Giảm giá</th>
-                                <th class="no-sort text-center" style="width:10rem">Ngày tạo</th>
+                                <th class="no-sort text-center" style="width:5rem">Giá bán</th>
+                                <th class="no-sort text-center" style="width:5rem">Discount</th>
                                 <th class="no-sort text-center" style="width:5rem">Tồn kho</th>
+                                <th class="no-sort text-center" style="width:5rem">Status</th>
                                 <th class="no-sort text-center" style="width:5rem">Bán chạy</th>
                                 <th class="no-sort text-center" style="width:10rem">Action</th>
                             </tr>
@@ -54,15 +90,37 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="~/Admin/Products/Details/@Html.DisplayFor(modelItem => item.CateId)">
-                                            @Html.DisplayFor(modelItem => item.CateId)
+                                        <a href="~/Admin/AdminCategories/Details/@Html.DisplayFor(modelItem => item.CateId)">
+                                            @Html.DisplayFor(modelItem => item.Cate.CateName)
                                         </a>
                                     </td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Price)</td>
-                                    <td class="text-center">@item.Discount</td>
-                                    <td class="text-center">@item.CreateDate</td>
+                                    <td class="text-center">@item.Price.Value.ToString("#,##0") VND</td>
+                                    <td class="text-center">@item.Discount.Value.ToString("#,##0") VND</td>
                                     <td class="text-center">@item.UnitsInStock</td>
-                                    <td class="text-center">@item.BestSeller</td>
+                                    <td class="text-center">
+                                        @if (item.UnitsInStock.Value > 0)
+                                        {
+                                            <p>Còn hàng</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Hết hàng</p>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.BestSeller == true)
+                                        {
+                                            <p><i class="fas fa-check" style="color: #19d238;"></i></p>
+                                        }
+                                        else if (item.BestSeller == false)
+                                        {
+                                            <p><i class="fas fa-times" style="color: #df0c0c;"></i></p>
+                                        }
+                                        else
+                                        {
+                                            <p><i class="fas fa-sync-alt fa-spin" style="color: #777b83;"></i></p>
+                                        }
+                                    </td>
                                     <td class="text-center">
                                         <label class="switch">
                                             @if (item.Active == true)
@@ -84,60 +142,43 @@
                                     </td>
                                 </tr>
                             }
+
                         </tbody>
                     </table>
                 </div>
+                <!-- /.card-body -->
             </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>
-                                            Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td> 4</td>
-                                        <td>X</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>
-                                            Internet
-                                            Explorer 5.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td>5</td>
-                                        <td>C</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col -->
-            </div>
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCateID").change(function () {
+                var cateID = jQuery(this).children(":selected").attr("value");
+                cateID = parseFloat(cateID);
+                $('#txtCateID option').removeAttr('selected');
+                $("#txtCateID>[value=" + cateID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/Products/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CateId = cateID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                })
+            })
+        })
+    </script>
+}
