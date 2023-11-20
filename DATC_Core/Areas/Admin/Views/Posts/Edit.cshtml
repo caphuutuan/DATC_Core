@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -42,6 +42,9 @@
                                 @Html.HiddenFor(model => model.PostId)
                                 @Html.HiddenFor(model => model.Thumb)
                                 @Html.HiddenFor(model => model.CreateDate)
+                                @Html.HiddenFor(model => model.Views)
+                                @Html.HiddenFor(model => model.MetaKey)
+                                @Html.HiddenFor(model => model.MetaDesc)
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Tựa đề</label>
@@ -67,22 +70,36 @@
                                     @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger"  })
                                 </div>
 
+                               @*  <div class="form-group">
+                                    <label class="control-label col-md-2">Người dùng</label>
+                                    @Html.EditorFor(model => model.AccountId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger"  })
+                                </div> *@
+
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Nhãn</label>
-                                    @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DropDownListFor(model=>model.Tags, (SelectList)ViewBag.cateList, "[Chọn tags]", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Danh mục</label>
-                                    @Html.DropDownList("CateId", ViewBag.cateList as SelectList, "Chọn thể loại", new { @class = "form-control" })
+                                    @Html.DropDownList("CateId", (SelectList)ViewData["DanhMuc"], "[Chọn thể loại]", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.CateId, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputFile">Thumb</label>
                                     <br>
-                                    <img class="pb-3" src="~/images/posts/@Model.Thumb" width="auto" height="150" alt="avatar" />
+                                    @if (Model.Thumb != null)
+                                    {
+
+                                        <img src="~/images/posts/@Model.Thumb" class="pb-3" style="width: 150px;object-fit: contain;"  alt="avatar" />
+                                    }
+                                    else
+                                    {
+
+                                    }
                                     <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
                                     @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>

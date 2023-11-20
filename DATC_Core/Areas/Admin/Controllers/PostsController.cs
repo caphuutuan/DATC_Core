@@ -66,21 +66,21 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,Title,Scontents,Contents,Thumb,Published,Alias,CreateDate,Author,AccountId,Tags,CateId,IsHot,IsNew,MetaDesc,MetaKey,Views")] Post post/*, IFormFile fThumb*/)
+        public async Task<IActionResult> Create([Bind("PostId,Title,Scontents,Contents,Thumb,Published,Alias,CreateDate,Author,AccountId,Tags,CateId,IsHot,IsNew,MetaDesc,MetaKey,Views")] Post post, IFormFile fThumb)
         {
             if (ModelState.IsValid)
             {
                 post.Title = Utilities.ToTitleCase(post.Title);
-                //if (fThumb != null)
-                //{
-                //    string extension = Path.GetExtension(fThumb.FileName);
-                //    string image = Utilities.SEOUrl(post.Title) + extension;
-                //    post.Thumb = await Utilities.UploadFile(fThumb, @"posts", image.ToLower());
-                //}
-                //if (string.IsNullOrEmpty(post.Thumb))
-                //{
-                //    post.Thumb = "placeholder-image.jpg";
-                //}
+                if (fThumb != null)
+                {
+                    string extension = Path.GetExtension(fThumb.FileName);
+                    string image = Utilities.SEOUrl(post.Title) + extension;
+                    post.Thumb = await Utilities.UploadFile(fThumb, @"posts", image.ToLower());
+                }
+                if (string.IsNullOrEmpty(post.Thumb))
+                {
+                    post.Thumb = "placeholder-image.jpg";
+                }
                 post.Alias = Utilities.SEOUrl(post.Title);
                 post.Scontents = post.Title;
                 post.Contents = post.Title;
@@ -93,11 +93,17 @@ namespace DATC_Core.Areas.Admin.Controllers
                 post.Published = false;
                 db.Add(post);
                 await db.SaveChangesAsync();
-                    _notyfService.Success("Thêm mới Bài viết", 3);
+                _notyfService.Success("Thêm mới Bài viết", 3);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AccountId"] = new SelectList(db.Accounts, "AccountId", "AccountId", post.AccountId);
             ViewData["CateId"] = new SelectList(db.PostCategorys, "CateId", "CateId", post.CateId);
+            ViewData["IsHot"] = new SelectList(new List<SelectListItem>
+        {
+            new SelectListItem { Value = "true", Text = "Nổi bật" },
+            new SelectListItem { Value = "false", Text = "Không nổi bật" }
+        }, "Value", "Text");
+
             List<PostCategory> postCateg = db.PostCategorys.ToList();
             ViewBag.cateList = new SelectList(postCateg, "CateId", "CateName");
             return View(post);
@@ -117,7 +123,7 @@ namespace DATC_Core.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewData["AccountId"] = new SelectList(db.Accounts, "AccountId", "AccountId", post.AccountId);
-            ViewData["CateId"] = new SelectList(db.PostCategorys, "CateId", "CateId", post.CateId);
+            ViewData["CateId"] = new SelectList(db.PostCategorys, "CateId", "CateName", post.CateId);
             List<PostCategory> postCateg = db.PostCategorys.ToList();
             ViewBag.cateList = new SelectList(postCateg, "CateId", "CateName");
             return View(post);
@@ -152,7 +158,7 @@ namespace DATC_Core.Areas.Admin.Controllers
                     //}
                     db.Update(post);
                     await db.SaveChangesAsync();
-                    _notyfService.Success("Cập nhật Bài viết ID = "+id, 3);
+                    _notyfService.Success("Cập nhật Bài viết ID = " + id, 3);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

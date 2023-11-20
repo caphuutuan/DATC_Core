@@ -52,6 +52,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/PostCategories/Create
         public IActionResult Create()
         {
+            ViewData["DanhMuc"] = new SelectList(db.PostCategorys, "CateId", "CateName");
             ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
             ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
             return View();
@@ -62,26 +63,28 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Cover")] PostCategory postCategory/*, IFormFile fCover*/)
+        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Cover")] PostCategory postCategory, IFormFile fCover)
         {
+            ViewData["DanhMuc"] = new SelectList(db.PostCategorys, "CateId", "CateName");
             ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
             ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
 
             if (ModelState.IsValid)
             {
                 postCategory.CateName = Utilities.ToTitleCase(postCategory.CateName);
-                //if (fCover != null)
-                //{
-                //    string extension = Path.GetExtension(fCover.FileName);
-                //    string image = Utilities.SEOUrl(postCategory.CateName) + extension;
-                //    postCategory.Cover = await Utilities.UploadFile(fCover, @"postCatgories", image.ToLower());
-                //}
-                //if (string.IsNullOrEmpty(postCategory.Cover))
-                //{
-                //    postCategory.Cover = "placeholder-image.jpg";
-                //}
-                postCategory.Description = postCategory.Cover;
-                postCategory.Levels = 0;
+                if (fCover != null)
+                {
+                    string extension = Path.GetExtension(fCover.FileName);
+                    string image = Utilities.SEOUrl(postCategory.CateName) + extension;
+                    postCategory.Cover = await Utilities.UploadFile(fCover, @"postCatgories", image.ToLower());
+                }
+                if (string.IsNullOrEmpty(postCategory.Cover))
+                {
+                    postCategory.Cover = "placeholder-image.jpg";
+                }
+                postCategory.Description = postCategory.CateName;
+                //postCategory.Levels = 0;
+                //postCategory.ParentId = postCategory.ParentId;
                 db.Add(postCategory);
                 await db.SaveChangesAsync();
                 _notyfService.Success("Thêm mới Danh mục bài viết", 3);
@@ -103,6 +106,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            ViewData["DanhMuc"] = new SelectList(db.PostCategorys, "CateId", "CateName");
             ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
             ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
             return View(postCategory);
@@ -153,6 +157,7 @@ namespace DATC_Core.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DanhMuc"] = new SelectList(db.PostCategorys, "CateId", "CateName");
             ViewBag.listCat = new SelectList(db.PostCategorys, "CateId", "CateName", 0);
             ViewBag.listLevel = new SelectList(db.PostCategorys, "Ordering", "CateName", 0);
             return View(postCategory);
@@ -202,20 +207,20 @@ namespace DATC_Core.Areas.Admin.Controllers
         }
 
 
-        [HttpPost]
-        //[CustomAuthorizeAttribute(RoleID = "ADMIN")]
-        public JsonResult changeStatus(int id)
-        {
-            PostCategory postCategory = db.PostCategorys.Find(id);
-            postCategory.Published = (postCategory.Published == true) ? true : false;
-            //categoryie.Updated_at = DateTime.Now;
-            //categoryie.Updated_by = int.Parse(Session["Admin_ID"].ToString());
-            db.Entry(postCategory).State = EntityState.Modified;
-            db.SaveChanges();
-            return Json(new
-            {
-                published = postCategory.Published
-            });
-        }
+        //[HttpPost]
+        ////[CustomAuthorizeAttribute(RoleID = "ADMIN")]
+        //public JsonResult changeStatus(int id)
+        //{
+        //    PostCategory postCategory = db.PostCategorys.Find(id);
+        //    postCategory.Published = (postCategory.Published == true) ? true : false;
+        //    //categoryie.Updated_at = DateTime.Now;
+        //    //categoryie.Updated_by = int.Parse(Session["Admin_ID"].ToString());
+        //    db.Entry(postCategory).State = EntityState.Modified;
+        //    db.SaveChanges();
+        //    return Json(new
+        //    {
+        //        published = postCategory.Published
+        //    });
+        //}
     }
 }
