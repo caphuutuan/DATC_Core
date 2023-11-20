@@ -71,25 +71,25 @@ namespace DATC_Core.Areas.Admin.Controllers
             return View(models);
 
         }
-
-        public IActionResult Filtter(int CateId = 0, int Active = 0)
+        // GET: Admin/Products/Filtter
+        public IActionResult Filtter(int CateId = 0/*, int Active = 0*/)
         {
-            var url = $"/Admin/Products?CateId={CateId}&Active={Active}";
-            if (CateId == 0 & Active == 0)
+            var url = $"/Admin/Products?CateId={CateId}";
+            if (CateId == 0)
             {
                 url = $"/Admin/Products";
             }
-            else
-            {
-                if (Active == 0)
-                {
-                    url = $"/Admin/Products?CateId={CateId}";
-                }
-                if (CateId == 0)
-                {
-                    url = $"/Admin/Products?Active={Active}";
-                }
-            }
+            //else
+            //{
+            //    if (Active == 0)
+            //    {
+            //        url = $"/Admin/Products?CateId={CateId}";
+            //    }
+            //    if (CateId == 0)
+            //    {
+            //        url = $"/Admin/Products?Active={Active}";
+            //    }
+            //}
             return Json(new { status = "success", redirectUrl = url });
         }
 
