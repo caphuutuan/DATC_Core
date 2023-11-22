@@ -123,5 +123,23 @@ namespace DATC_Core.Helper
                 return null;
             }
         }
+        public static void DeleteFile(string sDirectory, string fileName)
+        {
+            try
+            {
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", sDirectory, fileName);
+
+                // Kiểm tra xem tệp tin có tồn tại không trước khi xoá
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Xử lý nếu có lỗi trong quá trình xoá tệp tin
+                Console.WriteLine($"Error deleting file: {ex.Message}");
+            }
+        }
     }
 }
