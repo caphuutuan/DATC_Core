@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\_BestSeller.cshtml" />
     <Content Remove="Views\Shared\_NavBar.cshtml" />
   </ItemGroup>
 
@@ -33,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\_BestSeller.cshtml" />
     <None Include="Views\Shared\_NavBar.cshtml" />
     <None Include="wwwroot\AdminAssets\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
     <None Include="wwwroot\AdminAssets\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
@@ -551,7 +553,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\_BestSeller.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_NavBar.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_BestSeller.cshtml" />
   </ItemGroup>
 
 </Project>

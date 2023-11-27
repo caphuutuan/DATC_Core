@@ -907,6 +907,7 @@ section {
 
 .benefit {
     margin-top: 74px;
+    margin-bottom: 74px;
 }
 
 .benefit_row {
@@ -961,6 +962,7 @@ section {
     width: 100%;
     background: #f2f2f2;
     margin-top: 81px;
+    margin-bottom: 81px;
 }
 
 .newsletter_text {
@@ -1187,7 +1189,7 @@ section {
 }
 
     .product-item::after {
-        display: block;
+        display: inline-block;
         position: absolute;
         top: 0;
         left: -1px;
@@ -1355,6 +1357,10 @@ section {
 
 .favorite_left {
     left: 15px;
+}
+
+.favorite_center {
+    left: calc(100%/2);
 }
 
 .favorite.active {

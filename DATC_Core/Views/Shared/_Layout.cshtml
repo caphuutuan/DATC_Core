@@ -1,47 +1,47 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Colo Shop</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="Colo Shop Template">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="~/assets/images/adminltelogo.png" />
-	<!-- bootstrap 4 -->
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/bootstrap4/bootstrap.min.css">
-	<!-- icon -->
-	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
-	<link rel="stylesheet" href="~/Assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="~/Assets/plugins/themify-icons/themify-icons.css">
-	<!-- font -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-	<!-- cdn -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-	<!-- slider -->
-	<link rel="stylesheet" type="text/css" href="~/Assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-	<link rel="stylesheet" type="text/css" href="~/Assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-	<link rel="stylesheet" type="text/css" href="~/Assets/plugins/OwlCarousel2-2.2.1/animate.css">
-	<link rel="stylesheet" type="text/css" href="~/Assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="~/Assets/styles/slider.css">
-	<!-- common css -->
+    <title>Colo Shop</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Colo Shop Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/assets/images/adminltelogo.png" />
+    <!-- bootstrap 4 -->
+    <link rel="stylesheet" type="text/css" href="~/Assets/styles/bootstrap4/bootstrap.min.css">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link rel="stylesheet" href="~/Assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/Assets/plugins/themify-icons/themify-icons.css">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- slider -->
+    <link rel="stylesheet" type="text/css" href="~/Assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/styles/slider.css">
+    <!-- common css -->
     <link href="~/assets/styles/commonstyle.css" rel="stylesheet" />
-	<!-- responsive -->
+    <!-- responsive -->
     <link href="~/assets/styles/responsive.css" rel="stylesheet" />
-	<!-- home -->
+    <!-- home -->
     <link rel="stylesheet" type="text/css" href="~/Assets/styles/main_styles.css">
     <link href="~/assets/styles/main_responsive.css" rel="stylesheet" />
-	<!-- contact -->
+    <!-- contact -->
     <link rel="stylesheet" type="text/css" href="~/Assets/styles/contact_styles.css">
     <link href="~/assets/styles/contact_responsive.css" rel="stylesheet" />
-	<!-- category -->
+    <!-- category -->
     <link rel="stylesheet" href="~/Assets/styles/categories_styles.css" />
     <link href="~/assets/styles/categories_responsive.css" rel="stylesheet" />
-	<!-- product -->
+    <!-- product -->
     <link rel="stylesheet" type="text/css" href="~/Assets/styles/single_styles.css">
     <link href="~/assets/styles/single_responsive.css" rel="stylesheet" />
-	<!-- product detail -->
+    <!-- product detail -->
 
 
 
@@ -49,51 +49,42 @@
 
 <body>
 
-	<div class="super_container">
+    <div class="super_container">
 
-		<!-- Header -->
-		<header class="header trans_300">
-			@await Html.PartialAsync("_Header")
-			@await Html.PartialAsync("_NavBar")
-		</header>
-			@await Html.PartialAsync("_ResponsiveNavBar")
-		
+        <!-- Header -->
+        <header class="header trans_300">
+            @await Html.PartialAsync("_Header")
+            @await Html.PartialAsync("_NavBar")
+        </header>
 
-		@RenderBody()
+        @await Html.PartialAsync("_ResponsiveNavBar")
 
-		
-		<!-- Benefit -->
-		@await Html.PartialAsync("_Benefit")
-		
-
-		<!-- Blogs -->
-		@* @await Html.PartialAsync("_Blog.cshtml") *@
-
-		<!-- Newsletter -->
-		@await Html.PartialAsync("_NewLetter.cshtml")
+        @RenderBody()
 
 
-		<!-- Footer -->
-		@await Html.PartialAsync("_Footer")
-		
+        <!-- Newsletter -->
+        @await Html.PartialAsync("_NewLetter")
+        <!-- Footer -->
+        @await Html.PartialAsync("_Footer")
 
-	</div>
 
-	<script src="~/Assets/js/jquery-3.2.1.min.js"></script>
-	<script src="~/Assets/styles/bootstrap4/popper.js"></script>
-	<script src="~/Assets/styles/bootstrap4/bootstrap.min.js"></script>
-	<script src="~/Assets/plugins/Isotope/isotope.pkgd.min.js"></script>
-	<script src="~/Assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-	<script src="~/Assets/plugins/easing/easing.js"></script>
-	<script src="~/Assets/js/custom.js"></script>
-	<script src="js/categories_custom.js"></script>
-	<script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    </div>
+
+    <script src="~/Assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Assets/styles/bootstrap4/popper.js"></script>
+    <script src="~/Assets/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="~/Assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/Assets/plugins/easing/easing.js"></script>
+    <script src="~/Assets/js/custom.js"></script>
+    <script src="js/categories_custom.js"></script>
+    <script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
 
 
 
-	@await Component.InvokeAsync("Notyf")
-	@await RenderSectionAsync("Scripts", required:false)
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required:false)
 </body>
 
 </html>

@@ -30,6 +30,7 @@ namespace DATC_Core.Models
         public string? MetaDesc { get; set; }
         public string? MetaKey { get; set; }
         public int? UnitsInStock { get; set; }
+        public int? PriceSell { get; set; }
 
         public virtual Categoryie? Cate { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
