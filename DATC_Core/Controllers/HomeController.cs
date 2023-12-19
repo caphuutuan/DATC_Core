@@ -7,7 +7,7 @@ namespace DATC_Core.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -16,6 +16,12 @@ namespace DATC_Core.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult ListCateHome()
+        {
+            var items = db.Categoryies.ToList();
+            return PartialView("_NewArrivals", items);
         }
 
         public IActionResult Contact()
