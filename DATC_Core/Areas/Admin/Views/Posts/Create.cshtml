@@ -4,7 +4,10 @@
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
+@section Styles{
+    <link href="~/adminassets/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
+    <link href="~/adminassets/plugins/summernote/summernote.css" rel="stylesheet" />
+}
 @using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -46,13 +49,13 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Mô tả</label>
-                                    @Html.EditorFor(model => model.Scontents, new { htmlAttributes = new { @class = "form-control", @id="summernote"  } })
+                                    @Html.EditorFor(model => model.Scontents, new { htmlAttributes = new { @class = "form-control"} })
                                     @Html.ValidationMessageFor(model => model.Scontents, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Nội dung</label>
-                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control", @id="summernote"  } })
+                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger"  })
                                 </div>
 
@@ -117,3 +120,19 @@
     </section>
 }
 
+@section Scripts{
+    <script src="~/adminassets/plugins/select2/js/select2.min.js"></script>
+    <script src="~/adminassets/plugins/summernote/summernote-bs4.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('#summernote').summernote({
+                FontNames: ['Arial'],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5'],
+                height: 200,
+                minHeight: null,
+                maxHeight: null,
+                focus: true
+            });
+        });
+    </script>
+}

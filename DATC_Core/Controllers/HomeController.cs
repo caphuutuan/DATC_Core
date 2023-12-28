@@ -1,5 +1,6 @@
 ﻿using DATC_Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace DATC_Core.Controllers
@@ -7,7 +8,7 @@ namespace DATC_Core.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        private readonly DATCCoreMineDBContext db = new DATCCoreMineDBContext();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,9 +16,9 @@ namespace DATC_Core.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var products = db.Products.Include(x => x.Cate).ToList();
+            return View(products);
         }
-
         public IActionResult Contact()
         {
             return View();

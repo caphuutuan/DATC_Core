@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Shared\_NavBar.cshtml" />
+    <Content Remove="Views\Shared\_ProductDetail.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Home\_BestSeller.cshtml" />
     <None Include="Views\Shared\_NavBar.cshtml" />
+    <None Include="Views\Shared\_ProductDetail.cshtml" />
     <None Include="wwwroot\AdminAssets\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
     <None Include="wwwroot\AdminAssets\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
     <None Include="wwwroot\AdminAssets\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -448,49 +451,14 @@
     <None Include="wwwroot\AdminAssets\plugins\sweetalert2\sweetalert2.min.js" />
     <None Include="wwwroot\AdminAssets\plugins\toastr\toastr.js.map" />
     <None Include="wwwroot\AdminAssets\plugins\toastr\toastr.min.js" />
-    <None Include="wwwroot\Assets\images\banner_1.jpg" />
-    <None Include="wwwroot\Assets\images\banner_2.jpg" />
-    <None Include="wwwroot\Assets\images\banner_3.jpg" />
-    <None Include="wwwroot\Assets\images\blog_1.jpg" />
-    <None Include="wwwroot\Assets\images\blog_2.jpg" />
-    <None Include="wwwroot\Assets\images\blog_3.jpg" />
-    <None Include="wwwroot\Assets\images\deal_ofthe_week.png" />
-    <None Include="wwwroot\Assets\images\desc_1.jpg" />
-    <None Include="wwwroot\Assets\images\desc_2.jpg" />
-    <None Include="wwwroot\Assets\images\desc_3.jpg" />
-    <None Include="wwwroot\Assets\images\map_marker.png" />
-    <None Include="wwwroot\Assets\images\product_1.png" />
-    <None Include="wwwroot\Assets\images\product_10.png" />
-    <None Include="wwwroot\Assets\images\product_2.png" />
-    <None Include="wwwroot\Assets\images\product_3.png" />
-    <None Include="wwwroot\Assets\images\product_4.png" />
-    <None Include="wwwroot\Assets\images\product_5.png" />
-    <None Include="wwwroot\Assets\images\product_6.png" />
-    <None Include="wwwroot\Assets\images\product_7.png" />
-    <None Include="wwwroot\Assets\images\product_8.png" />
-    <None Include="wwwroot\Assets\images\product_9.png" />
-    <None Include="wwwroot\Assets\images\single_1.jpg" />
-    <None Include="wwwroot\Assets\images\single_1_thumb.jpg" />
-    <None Include="wwwroot\Assets\images\single_2.jpg" />
-    <None Include="wwwroot\Assets\images\single_2_thumb.jpg" />
-    <None Include="wwwroot\Assets\images\single_3.jpg" />
-    <None Include="wwwroot\Assets\images\single_3_thumb.jpg" />
-    <None Include="wwwroot\Assets\images\slider_1.jpg" />
     <None Include="wwwroot\Assets\js\categories_custom.js" />
     <None Include="wwwroot\Assets\js\contact_custom.js" />
     <None Include="wwwroot\Assets\js\custom.js" />
     <None Include="wwwroot\Assets\js\jquery-3.2.1.min.js" />
     <None Include="wwwroot\Assets\js\single_custom.js" />
     <None Include="wwwroot\Assets\plugins\easing\easing.js" />
-    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\css\font-awesome.css" />
-    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\css\font-awesome.min.css" />
-    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
-    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
-    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
     <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
-    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\fonts\FontAwesome.otf" />
-    <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\animated.less" />
     <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\bordered-pulled.less" />
     <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\less\core.less" />
@@ -520,30 +488,11 @@
     <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_stacked.scss" />
     <None Include="wwwroot\Assets\plugins\font-awesome-4.7.0\scss\_variables.scss" />
     <None Include="wwwroot\Assets\plugins\Isotope\isotope.pkgd.min.js" />
-    <None Include="wwwroot\Assets\plugins\jquery-ui-1.12.1.custom\jquery-ui.css" />
     <None Include="wwwroot\Assets\plugins\jquery-ui-1.12.1.custom\jquery-ui.js" />
-    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\ajax-loader.gif" />
-    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\animate.css" />
-    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.carousel.css" />
     <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.carousel.js" />
-    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.theme.default.css" />
-    <None Include="wwwroot\Assets\plugins\OwlCarousel2-2.2.1\owl.video.play.png" />
-    <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.eot" />
     <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.svg" />
-    <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.ttf" />
-    <None Include="wwwroot\Assets\plugins\themify-icons\fonts\themify.woff" />
-    <None Include="wwwroot\Assets\plugins\themify-icons\themify-icons.css" />
-    <None Include="wwwroot\Assets\styles\bootstrap4\bootstrap.min.css" />
     <None Include="wwwroot\Assets\styles\bootstrap4\bootstrap.min.js" />
     <None Include="wwwroot\Assets\styles\bootstrap4\popper.js" />
-    <None Include="wwwroot\Assets\styles\categories_responsive.css" />
-    <None Include="wwwroot\Assets\styles\categories_styles.css" />
-    <None Include="wwwroot\Assets\styles\contact_responsive.css" />
-    <None Include="wwwroot\Assets\styles\contact_styles.css" />
-    <None Include="wwwroot\Assets\styles\main_styles.css" />
-    <None Include="wwwroot\Assets\styles\main_responsive.css" />
-    <None Include="wwwroot\Assets\styles\single_responsive.css" />
-    <None Include="wwwroot\Assets\styles\single_styles.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -551,7 +500,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\_BestSeller.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_NavBar.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_ProductDetail.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_BestSeller.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_ProductDetail.cshtml" />
   </ItemGroup>
 
 </Project>

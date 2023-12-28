@@ -102,7 +102,15 @@
                             <div class="form-group">
                                 <label for="exampleInputFile">Avatar</label>
                                 <br>
-                                <img class="pb-3" src="~/images/customers/@Model.Avatar" width="auto" height="150" alt="avatar" />
+                                @if (Model.Avatar != null)
+                                {
+
+                                    <img src="~/images/customers/@Model.Avatar" class="pb-3" style="width: 150px;object-fit: contain;" alt="avatar" />
+                                }
+                                else
+                                {
+
+                                }
                                 <input name="fAvatar" type="file" class="form-control-file" asp-for="Avatar">
                                 @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger"  })
                             </div>

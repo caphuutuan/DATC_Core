@@ -10,6 +10,8 @@ using PagedList.Core;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using DATC_Core.Helper;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace DATC_Core.Areas.Admin.Controllers
 {
@@ -71,25 +73,25 @@ namespace DATC_Core.Areas.Admin.Controllers
             return View(models);
 
         }
-
-        public IActionResult Filtter(int CateId = 0, int Active = 0)
+        // GET: Admin/Products/Filtter
+        public IActionResult Filtter(int CateId = 0/*, int Active = 0*/)
         {
-            var url = $"/Admin/Products?CateId={CateId}&Active={Active}";
-            if (CateId == 0 & Active == 0)
+            var url = $"/Admin/Products?CateId={CateId}";
+            if (CateId == 0)
             {
                 url = $"/Admin/Products";
             }
-            else
-            {
-                if (Active == 0)
-                {
-                    url = $"/Admin/Products?CateId={CateId}";
-                }
-                if (CateId == 0)
-                {
-                    url = $"/Admin/Products?Active={Active}";
-                }
-            }
+            //else
+            //{
+            //    if (Active == 0)
+            //    {
+            //        url = $"/Admin/Products?CateId={CateId}";
+            //    }
+            //    if (CateId == 0)
+            //    {
+            //        url = $"/Admin/Products?Active={Active}";
+            //    }
+            //}
             return Json(new { status = "success", redirectUrl = url });
         }
 
@@ -128,50 +130,56 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ShortDesc,Description,CateId,Price,Discount,Thumb,Video,CreateDate,ModifiedDate,BestSeller,IsHome,Active,Title,Tags,Alias,MetaDesc,MetaKey,UnitsInStock")] Product product /*, IFormFile fThumb, IFormFile fVideo*/)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ShortDesc,Description,CateId,Price,Discount,Thumb,Video,CreateDate,ModifiedDate,BestSeller,IsHome,Active,Title,Tags,Alias,MetaDesc,MetaKey,UnitsInStock")] Product product, IFormFile? fThumb, IFormFile? fVideo)
         {
-            if (ModelState.IsValid)
+            try
             {
-                product.ProductName = Utilities.ToTitleCase(product.ProductName);
-                //if (fThumb != null)
-                //{
-                //    string extension = Path.GetExtension(fThumb.FileName);
-                //    string image = Utilities.SEOUrl(product.ProductName) + extension;
-                //    product.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
-                //}
-                //if (string.IsNullOrEmpty(product.Thumb))
-                //{
-                //    product.Thumb = "avatar_profile_null.jpg";
-                //}
-                //if (fVideo != null)
-                //{
-                //    string extension = Path.GetExtension(fVideo.FileName);
-                //    string image = Utilities.SEOUrl(product.ProductName) + extension;
-                //    product.Thumb = await Utilities.UploadFile(fVideo, @"products", image.ToLower());
-                //}
-                //if (string.IsNullOrEmpty(product.Thumb))
-                //{
-                //    product.Thumb = "avatar_profile_null.jpg";
-                //}
+                if (ModelState.IsValid)
+                {
+                    product.ProductName = Utilities.ToTitleCase(product.ProductName);
+                    if (fThumb != null)
+                    {
+                        string extension = Path.GetExtension(fThumb.FileName);
+                        string image = Utilities.SEOUrl(product.ProductName) + extension;
+                        product.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(product.Thumb))
+                    {
+                        product.Thumb = "avatar_profile_null.jpg";
+                    }
+                    if (fVideo != null)
+                    {
+                        string extension = Path.GetExtension(fVideo.FileName);
+                        string image = Utilities.SEOUrl(product.ProductName) + extension;
+                        product.Thumb = await Utilities.UploadFile(fVideo, @"products", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(product.Thumb))
+                    {
+                        product.Thumb = "product-placeholder.png";
+                    }
 
-                //String strSlug = XString.ToAscii(product.ProductName);
-                product.CreateDate = DateTime.Now;
-                product.UnitsInStock = 0;
-                product.Discount = 0;
-                product.Price = 0;
-                product.IsHome = false;
-                product.Alias = Utilities.SEOUrl(product.ProductName);
-                product.MetaDesc = product.ProductName;
-                product.Description = product.ProductName;
-                product.Title = product.ProductName;
-                product.MetaKey = product.ProductName;
-                product.Active = false;
-                db.Add(product);
-                await db.SaveChangesAsync();
-                _notyfService.Success("Tạo mới thành công");
-                return RedirectToAction(nameof(Index));
+                    //String strSlug = XString.ToAscii(product.ProductName);
+                    product.CreateDate = DateTime.Now;
+                    product.UnitsInStock = 0;
+                    product.Discount = 0;
+                    product.Price = 0;
+                    product.IsHome = false;
+                    product.Alias = Utilities.SEOUrl(product.ProductName);
+                    product.MetaDesc = product.ProductName;
+                    product.Description = product.ProductName;
+                    product.Title = product.ProductName;
+                    product.MetaKey = product.ProductName;
+                    product.Active = false;
+                    db.Add(product);
+                    await db.SaveChangesAsync();
+                    _notyfService.Success("Tạo mới thành công");
+                    return RedirectToAction(nameof(Index));
+                }
             }
-
+            catch(Exception e)
+            {
+                var abc = e.Message;
+            }
 
             ViewData["DanhMuc"] = new SelectList(db.Categoryies, "CateId", "CateName");
 
@@ -205,7 +213,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ShortDesc,Description,CateId,Price,Discount,Thumb,Video,CreateDate,ModifiedDate,BestSeller,IsHome,Active,Title,Tags,Alias,MetaDesc,MetaKey,UnitsInStock")] Product product/*, IFormFile fThumb, IFormFile fVideo*/)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ShortDesc,Description,CateId,Price,Discount,Thumb,Video,CreateDate,ModifiedDate,BestSeller,IsHome,Active,Title,Tags,Alias,MetaDesc,MetaKey,UnitsInStock")] Product product, IFormFile? fThumb, IFormFile? fVideo)
         {
             if (id != product.ProductId)
             {
@@ -217,26 +225,28 @@ namespace DATC_Core.Areas.Admin.Controllers
                 try
                 {
                     product.ProductName = Utilities.ToTitleCase(product.ProductName);
-                    //if (fThumb != null)
-                    //{
-                    //    string extension = Path.GetExtension(fThumb.FileName);
-                    //    string image = Utilities.SEOUrl(product.ProductName) + extension;
-                    //    product.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
-                    //}
-                    //if (string.IsNullOrEmpty(product.Thumb))
-                    //{
-                    //    product.Thumb = "avatar_profile_null.jpg";
-                    //}
-                    //if (fVideo != null)
-                    //{
-                    //    string extension = Path.GetExtension(fVideo.FileName);
-                    //    string image = Utilities.SEOUrl(product.ProductName) + extension;
-                    //    product.Thumb = await Utilities.UploadFile(fVideo, @"products", image.ToLower());
-                    //}
-                    //if (string.IsNullOrEmpty(product.Thumb))
-                    //{
-                    //    product.Thumb = "avatar_profile_null.jpg";
-                    //}
+                    if (fThumb != null)
+                    {
+                        string extension = Path.GetExtension(fThumb.FileName);
+                        string image = Utilities.SEOUrl(product.ProductName) + extension;
+                        product.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(product.Thumb))
+                    {
+                        product.Thumb = "avatar_profile_null.jpg";
+                    }
+
+                    if (fVideo != null)
+                    {
+                        string extension = Path.GetExtension(fVideo.FileName);
+                        string image = Utilities.SEOUrl(product.ProductName) + extension;
+                        product.Thumb = await Utilities.UploadFile(fVideo, @"products", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(product.Thumb))
+                    {
+                        product.Thumb = "avatar_profile_null.jpg";
+                    }
+
 
                     product.Alias = Utilities.SEOUrl(product.ProductName);
                     product.ModifiedDate = DateTime.Now;

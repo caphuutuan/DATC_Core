@@ -14,29 +14,33 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-4">
-                            <h5 class="text-csm">@ViewBag.Title</h5>
-                        </div>
-                        @* <div class="col-3">
-
-                        <label for="exampleSelectBorder">Chọn danh mục</label>
-                        <select class="custom-select form-control-border" id="exampleSelectBorder">
-                        <option>Value 1</option>
-                        <option>Value 2</option>
-                        <option>Value 3</option>
-                        </select>
-                        </div>*@
-                        
-                        <div class="col-4">
                             <select class="form-control select2" id="txtCateID" name="txtCateID" asp-items="ViewBag.DanhMuc" style="width: 100%; height:auto !important">
                                 <option selected="selected" disabled>Chọn danh mục</option>
                                 <option value="0">All</option>
                                 @* @foreach (var item in Model)
                                 {
-                                    <option>@item.Cate.CateName</option>
+                                <option>@item.Cate.CateName</option>
                                 } *@
                             </select>
                             @*  <div class="form-group">
+                            <input type="text" name="name" value="" />
                             </div> *@
+                        </div>
+                        <div class="col-4">
+
+                            @*   <div class="">
+                            <select class="select2" multiple="multiple" data-placeholder="Tìm kiếm sản phẩm" style="width: 100%;">
+                            @foreach (var i in Model)
+                            {
+                            <option>@i.ProductName</option>
+                            }
+                            </select>
+                            </div>*@
+                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
+                            @* <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Tim kiem san pham" /> *@
+
+
+
                         </div>
                         <div class="col-4">
                             <div class="float-right pt-1">
@@ -49,23 +53,23 @@
                             </div>
                         </div>
                         @* <div class="col-md-3">
-                            <select class="form-control select2" style="width: 100%; height:auto !important">
-                                <option selected="selected" disabled>Status</option>
-                                <option value="0">All</option>
-                                @* @foreach (var item in Model)
-                                {
-                                <option>@item.Active</option>
-                                }
-                            </select>
-                            @*  <div class="form-group">
-                            </div>
+                        <select class="form-control select2" style="width: 100%; height:auto !important">
+                        <option selected="selected" disabled>Status</option>
+                        <option value="0">All</option>
+                        @* @foreach (var item in Model)
+                        {
+                        <option>@item.Active</option>
+                        }
+                        </select>
+                        @*  <div class="form-group">
+                        </div>
                         </div> *@
                     </div>
                 </div>
 
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="example1" class="table table-bordered table-hover nowrap">
                         <thead>
                             <tr>
                                 <th class="text-center" style="width:3rem;">ID</th>
@@ -79,7 +83,7 @@
                                 <th class="no-sort text-center" style="width:10rem">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="records_table">
                             @foreach (var item in Model)
                             {
                                 <tr>
@@ -95,7 +99,7 @@
                                         </a>
                                     </td>
                                     <td class="text-center">@item.Price.Value.ToString("#,##0") VND</td>
-                                    <td class="text-center">@item.Discount.Value.ToString("#,##0") VND</td>
+                                    <td class="text-center">@item.Discount.Value.ToString("#,##0") %</td>
                                     <td class="text-center">@item.UnitsInStock</td>
                                     <td class="text-center">
                                         @if (item.UnitsInStock.Value > 0)
@@ -177,8 +181,31 @@
                     error: function (xhr) {
                         alert('error');
                     }
-                })
-            })
-        })
+                });
+            });
+
+            var delayTimer;
+            $("#keyword").keyup(function () {
+                clearTimeout(delayTimer);
+                delayTimer = setTimeout(function () {
+                    var strkeyword = $('#keyword').val();
+                    $.ajax({
+                        url: 'Admin/Searchs/FindProduct/',
+                        datatype: "json",
+                        type: "POST",
+                        data: { keyword: strkeyword },
+                        async: true,
+                        success: function (result) {
+                            $("#records_table").html("");
+                            $("#records_table").html(result);
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }, 500); 
+            });
+
+        });
     </script>
 }

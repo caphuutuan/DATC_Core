@@ -73,12 +73,30 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputFile">Thumb</label>
+                                    @if (Model.Thumb != null)
+                                    {
+
+                                        <img src="~/images/catgories/@Model.Thumb" class="pb-3" style="width: 110px;object-fit: contain;" alt="Cover" />
+                                    }
+                                    else
+                                    {
+
+                                    }
                                     <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
                                     @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputFile">Cover</label>
+                                    @if (Model.Cover != null)
+                                    {
+
+                                        <img src="~/images/catgories/@Model.Cover" class="pb-3" style="width: 110px;object-fit: contain;" alt="Cover" />
+                                    }
+                                    else
+                                    {
+
+                                    }
                                     <input name="fCover" type="file" class="form-control-file" asp-for="Cover">
                                     @Html.ValidationMessageFor(model => model.Cover, "", new { @class = "text-danger"  })
                                 </div>

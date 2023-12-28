@@ -85,17 +85,34 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Thumb</label>
+                                    <label for="Thumb">Thumb</label>
                                     <br>
-                                    <img class="pb-3" src="~/images/products/@Model.Thumb" width="auto" height="150" alt="avatar" />
+                                    @if (Model.Thumb != null)
+                                    {
+
+                                        <img src="~/images/products/@Model.Thumb" class="pb-3" style="width: 110px;object-fit: contain;" alt="Cover" />
+                                    }
+                                    else
+                                    {
+
+                                    }
                                     <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
                                     @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Video</label>
+                                    <label for="Video">Video</label>
                                     <br>
-                                    <img class="pb-3" src="~/images/products/@Model.Video" width="auto" height="150" alt="avatar" />
+                                    @if (Model.Thumb != null)
+                                    {
+
+                                        <img class="pb-3" src="~/images/products/@Model.Video" width="auto" height="150" alt="avatar" />
+
+                                    }
+                                    else
+                                    {
+
+                                    }
                                     <input name="fThumb" type="file" class="form-control-file" asp-for="Video">
                                     @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger"  })
                                 </div>

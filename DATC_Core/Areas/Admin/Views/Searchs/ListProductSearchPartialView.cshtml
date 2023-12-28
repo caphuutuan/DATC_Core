@@ -1,0 +1,67 @@
+﻿@model List<Product>
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.ProductId)</td>
+            <td>
+                <a href="~/Admin/Products/Details/@Html.DisplayFor(modelItem => item.ProductId)">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </a>
+            </td>
+            <td>
+                <a href="~/Admin/AdminCategories/Details/@Html.DisplayFor(modelItem => item.CateId)">
+                    @Html.DisplayFor(modelItem => item.Cate.CateName)
+                </a>
+            </td>
+            <td class="text-center">@item.Price.Value.ToString("#,##0") VND</td>
+            <td class="text-center">@item.Discount.Value.ToString("#,##0") VND</td>
+            <td class="text-center">@item.UnitsInStock</td>
+            <td class="text-center">
+                @if (item.UnitsInStock.Value > 0)
+                {
+                    <p>Còn hàng</p>
+                }
+                else
+                {
+                    <p>Hết hàng</p>
+                }
+            </td>
+            <td class="text-center">
+                @if (item.BestSeller == true)
+                {
+                    <p><i class="fas fa-check" style="color: #19d238;"></i></p>
+                }
+                else if (item.BestSeller == false)
+                {
+                    <p><i class="fas fa-times" style="color: #df0c0c;"></i></p>
+                }
+                else
+                {
+                    <p><i class="fas fa-sync-alt fa-spin" style="color: #777b83;"></i></p>
+                }
+            </td>
+            <td class="text-center">
+                <label class="switch">
+                    @if (item.Active == true)
+                    {
+                        <input class="changeStatus" data-id="@item.ProductId" data-controller="Products" type="checkbox" checked>
+                    }
+                    else
+                    {
+                        <input class="changeStatus" data-id="@item.ProductId" data-controller="Products" type="checkbox">
+                    }
+                    <span class="slider round"></span>
+                </label>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
+                    <a href="@Url.Action("Edit", "Products", new { id = item.ProductId })" class="text-white"><i class="fas fa-pen"></i></a>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa">
+                    <a href="@Url.Action("Delete", "Products", new { id = item.ProductId })" class="text-white"><i class="far fa-trash-alt"></i></a>
+                </button>
+            </td>
+        </tr>
+    }
+}

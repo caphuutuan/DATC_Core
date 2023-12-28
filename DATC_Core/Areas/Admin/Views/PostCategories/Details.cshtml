@@ -4,6 +4,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+
 <section class="content my-2">
     <div class="container-fluid">
         <!--Content-->
@@ -58,11 +59,29 @@
                     </tr>
                     <tr>
                         <th scope="col"> @Html.DisplayNameFor(model => model.Published)</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.Published)</td>
+                        <td scope="col"> 
+                            @if(Model.Published == true){
+                                        <span>Actived</span>
+                                    }
+                                    else
+                                    {
+                                <span>InActived</span>
+
+                                    }
+                                </td>
                     </tr>
                     <tr>
                         <th scope="col"> @Html.DisplayNameFor(model => model.Cover)</th>
-                        <td scope="col">  @Html.DisplayFor(model => model.Cover)</td>
+                        <td scope="col">
+                                    @if (Model.Cover != null)
+                                    {
+                                <img src="~/images/postCatgories/@Model.Cover" style="width: 110px;object-fit: contain;" alt="Cover" />
+                                    }
+                                    else
+                                    {
+
+                                    }
+                        </td>
                     </tr>
                 </table>
             </div>
