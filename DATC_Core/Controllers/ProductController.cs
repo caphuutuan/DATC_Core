@@ -1,5 +1,6 @@
 ﻿using DATC_Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
 using System.Drawing.Printing;
@@ -17,16 +18,16 @@ namespace DATC_Core.Controllers
 
 		public IActionResult Index(int? id)
 		{
-            var items = db.Products.Include(x=>x.Cate).ToList();
+            var items = db.Products.ToList();
             if (id != null)
             {
                 items = items.Where(x => x.ProductId == id).ToList();
             }
             return View(items);
-		}
+        }
 		public IActionResult Detail(int id)
 		{
-            var product = db.Products.Include(x => x.Cate).FirstOrDefault(x => x.ProductId == id);
+            var product = db.Products.Include(x => x.Cate).AsNoTracking().ToList();
             if (product == null)
             {
                 return RedirectToAction("Index");
@@ -43,5 +44,6 @@ namespace DATC_Core.Controllers
             //return View(product);
 
         }
-	}
+
+    }
 }

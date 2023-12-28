@@ -1,4 +1,6 @@
-﻿
+﻿@model IEnumerable<DATC_Core.Models.Product>
+
+
 @{
     ViewData["Title"] = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,5 +14,9 @@
 @await Html.PartialAsync("_NewArrivals")
 
 @await Html.PartialAsync("_DealOfWeek")
+
+@await Html.PartialAsync("_BestSeller")
+
+
 <!-- Benefit -->
 @await Html.PartialAsync("_Benefit")

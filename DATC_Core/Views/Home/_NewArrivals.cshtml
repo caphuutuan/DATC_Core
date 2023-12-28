@@ -1,5 +1,8 @@
-﻿<!-- New Arrivals -->
-@if (Model != null)
+﻿@model IEnumerable<DATC_Core.Models.Product>
+
+
+<!-- New Arrivals -->
+@if (Model != null && Model.Any())
 {
     <div class="new_arrivals">
         <div class="container">
@@ -14,13 +17,16 @@
                 <div class="col text-center">
                     <div class="new_arrivals_sorting">
                         <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-                            @foreach (var i in Model.Take(3))
-                            {
-                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">@i.Cate.CateName</li>
-                                @* <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
+                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
+                            @* <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
                         <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
                         <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li> *@
+
+                            @foreach (var item in Model.Take(4))
+                            {
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">@item.Cate.CateName</li>
                             }
+
                         </ul>
                     </div>
                 </div>
@@ -30,41 +36,96 @@
                     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
 
                         <!-- Product 1 -->
+                        @foreach (var item in Model)
+                        {
 
-                        <div class="product-item men">
-                            <div class="product discount product_filter">
-                                <div class="product_image">
-                                    <img src="~/Assets/images/product_1.png" alt="">
-                                </div>
-                                <div class="favorite favorite_center"></div>
-                                <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-@Model.Discount%</span></div>
-                                <div class="product_info">
-                                    <h6 class="product_name"><a href="~/product/detail/@Model.ProductId">@Model.ProductName</a></h6>
-                                    <div class="product_price">
-                                        @if (Model.Discount == 0)
+                            <div class="product-item men">
+                                <div class="product discount product_filter">
+                                    <div class="product_image">
+                                        @if (item.Thumb != null)
                                         {
-                                            @Model.Price.Value.ToString("#,##0"+" VND")
-                                            ;
+                                            <img src="~/images/products/@item.Thumb" alt="Thumbnail">
                                         }
                                         else
                                         {
-                                            var discountPrice = Model.Price * (1 - (Model.Discount / 100));
-                                            @discountPrice.Value.ToString("#,##0"+" VND")
-                                            ;
-                                            <span>@Model.Price.Value.ToString("#,##0"+" VND")</span>
+                                            <img src="~/images/products/product-placeholder.png" alt="Thumbnail">
                                         }
+
                                     </div>
+
+                                    @if (item.IsHome == true)
+                                    {
+                                        @if (item.Discount != null)
+                                        {
+                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-@item.Discount %</span></div>
+                                            <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="favorite favorite_left"></div>
+                                            <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
+
+                                        }
+
+                                    }
+                                    @if (item.UnitsInStock == 0)
+                                    {
+                                        <div class="favorite favorite_left"></div>
+                                        <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Hết hàng</span></div>
+                                    }
+                                    //điều kiện sai : nếu có cả 2 thì favor vẫn hiện
+                                    else
+                                    {
+                                        @* <div class="favorite"></div> *@
+
+                                    }
+
+                                    <div class="product_info">
+                                        <h6 class="product_name"><a href="~/products/details/@item.ProductId">@item.ProductName</a></h6>
+                                        <div class="product_price">
+                                            @{
+                                                var priceSell = (item.Price - (item.Price * item.Discount / 100));
+                                            }
+                                            @if (item.Discount == 0 || item.Discount == null)
+                                            {
+                                                @(priceSell.Value.ToString("#,##0") + " VND")
+                                                ;
+                                            }
+                                            else
+                                            {
+                                                @(priceSell.Value.ToString("#,##0") + " VND")
+                                                ;
+                                                <span>@item.Price VND</span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+                            </div>
+                        }
+
+                        <!-- Product 2 -->
+
+                        <div class="product-item women">
+                            <div class="product product_filter">
+                                <div class="product_image">
+                                    <img src="~/assets/images/product_2.png" alt="">
+                                </div>
+                                <div class="favorite"></div>
+                                <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
+                                <div class="product_info">
+                                    <h6 class="product_name"><a href="single.html">Samsung CF591 Series Curved 27-Inch FHD Monitor</a></h6>
+                                    <div class="product_price">$610.00</div>
                                 </div>
                             </div>
                             <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                         </div>
-
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
 }

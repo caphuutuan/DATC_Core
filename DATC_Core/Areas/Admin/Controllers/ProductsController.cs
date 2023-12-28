@@ -155,7 +155,7 @@ namespace DATC_Core.Areas.Admin.Controllers
                     }
                     if (string.IsNullOrEmpty(product.Thumb))
                     {
-                        product.Thumb = "avatar_profile_null.jpg";
+                        product.Thumb = "product-placeholder.png";
                     }
 
                     //String strSlug = XString.ToAscii(product.ProductName);

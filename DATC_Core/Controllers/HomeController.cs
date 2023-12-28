@@ -1,5 +1,6 @@
 ﻿using DATC_Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace DATC_Core.Controllers
@@ -15,15 +16,9 @@ namespace DATC_Core.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var products = db.Products.Include(x => x.Cate).ToList();
+            return View(products);
         }
-
-        public ActionResult ListCateHome()
-        {
-            var items = db.Categoryies.ToList();
-            return PartialView("_NewArrivals", items);
-        }
-
         public IActionResult Contact()
         {
             return View();
