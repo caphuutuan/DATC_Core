@@ -55,29 +55,23 @@
 
                                     @if (item.IsHome == true)
                                     {
-                                        @if (item.Discount != null)
+                                        <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
+                                        if (item.Discount > 0 && item.UnitsInStock >0)
                                         {
                                             <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-@item.Discount %</span></div>
-                                            <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
                                         }
                                         else
                                         {
-                                            <div class="favorite favorite_left"></div>
-                                            <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
-
+                                            <div class="favorite"></div>
                                         }
-
+                                        if (item.UnitsInStock == 0)
+                                        {
+                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Hết hàng</span></div>
+                                        }
                                     }
-                                    @if (item.UnitsInStock == 0)
-                                    {
-                                        <div class="favorite favorite_left"></div>
-                                        <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Hết hàng</span></div>
-                                    }
-                                    //điều kiện sai : nếu có cả 2 thì favor vẫn hiện
                                     else
                                     {
-                                        @* <div class="favorite"></div> *@
-
+                                        <div class="favorite left-favorite"></div>
                                     }
 
                                     <div class="product_info">

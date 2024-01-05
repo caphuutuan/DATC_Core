@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "AdminCategories", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -64,13 +64,13 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Thumb</label>
+                                    <label for="Thumb">Thumb</label>
                                     <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
                                     @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Cover</label>
+                                    <label for="Cover">Cover</label>
                                     <input name="fCover" type="file" class="form-control-file" asp-for="Cover">
                                     @Html.ValidationMessageFor(model => model.Cover, "", new { @class = "text-danger"  })
                                 </div>

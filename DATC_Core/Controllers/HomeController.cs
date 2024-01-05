@@ -16,7 +16,7 @@ namespace DATC_Core.Controllers
 
         public IActionResult Index()
         {
-            var products = db.Products.Include(x => x.Cate).Where(x => x.Active == true && x.UnitsInStock > 0).ToList();
+            var products = db.Products.Include(x => x.Cate).Where(x => x.Active == true ).ToList();
             return View(products);
         }
         public IActionResult Contact()

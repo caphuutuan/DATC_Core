@@ -72,7 +72,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie/*, IFormFile fThumb, IFormFile fCover*/)
+        public async Task<IActionResult> Create([Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie, IFormFile? fThumb, IFormFile? fCover)
         {
             ViewBag.listCat = new SelectList(db.Categoryies, "CateId", "CateName", 0);
             ViewBag.listOrder = new SelectList(db.Categoryies, "Ordering", "CateName", 0);
@@ -81,29 +81,28 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
 
                 categoryie.CateName = Utilities.ToTitleCase(categoryie.CateName);
-                //if (fThumb != null)
-                //{
-                //    string extension = Path.GetExtension(fThumb.FileName);
-                //    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
-                //    categoryie.Thumb = await Utilities.UploadFile(fThumb, @"categories", image.ToLower());
-                //}
-                //if (string.IsNullOrEmpty(categoryie.Thumb))
-                //{
-                //    categoryie.Thumb = "placeholder-image.jpg";
-                //}
+                if (fThumb != null)
+                {
+                    string extension = Path.GetExtension(fThumb.FileName);
+                    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
+                    categoryie.Thumb = await Utilities.UploadFile(fThumb, @"categories", image.ToLower());
+                }
+                if (string.IsNullOrEmpty(categoryie.Thumb))
+                {
+                    categoryie.Thumb = "placeholder-image.jpg";
+                }
 
-                //if (fCover != null)
-                //{
-                //    string extension = Path.GetExtension(fCover.FileName);
-                //    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
-                //    categoryie.Cover = await Utilities.UploadFile(fCover, @"categories", image.ToLower());
-                //}
-                //if (string.IsNullOrEmpty(categoryie.Cover))
-                //{
-                //    categoryie.Cover = "placeholder-image.jpg";
-                //}
+                if (fCover != null)
+                {
+                    string extension = Path.GetExtension(fCover.FileName);
+                    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
+                    categoryie.Cover = await Utilities.UploadFile(fCover, @"categories", image.ToLower());
+                }
+                if (string.IsNullOrEmpty(categoryie.Cover))
+                {
+                    categoryie.Cover = "placeholder-image.jpg";
+                }
 
-                String Slug = XString.ToAscii(categoryie.CateName);
                 categoryie.Alias = Utilities.SEOUrl(categoryie.CateName);
                 categoryie.MetaKey = categoryie.CateName;
                 categoryie.MetaDesc = categoryie.CateName;
@@ -141,7 +140,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie/*,IFormFile fThumb, IFormFile fCover*/)
+        public async Task<IActionResult> Edit(int id, [Bind("CateId,CateName,Description,ParentId,Levels,Ordering,Published,Thumb,Title,Alias,MetaDesc,MetaKey,Cover,SchemaMarkup")] Categoryie categoryie, IFormFile? fThumb, IFormFile? fCover)
         {
             ViewBag.listCat = new SelectList(db.Categoryies, "CateId", "CateName", 0);
             ViewBag.listOrder = new SelectList(db.Categoryies, "Ordering", "CateName", 0);
@@ -157,17 +156,33 @@ namespace DATC_Core.Areas.Admin.Controllers
                 try
                 {
                     categoryie.CateName = Utilities.ToTitleCase(categoryie.CateName);
-                    //if (fThumb != null)
-                    //{
-                    //    string extension = Path.GetExtension(fThumb.FileName);
-                    //    string image = Utilities.SEOUrl(categoryie.CateName) + extension;
-                    //    categoryie.Thumb = await Utilities.UploadFile(fThumb, @"categories", image.ToLower());
-                    //}
-                    //if (string.IsNullOrEmpty(categoryie.Thumb))
-                    //{
-                    //    categoryie.Thumb = "placeholder-image.jpg";
-                    //}
+                    if (fThumb != null)
+                    {
+                        string extension = Path.GetExtension(fThumb.FileName);
+                        string image = Utilities.SEOUrl(categoryie.CateName) + extension;
+                        categoryie.Thumb = await Utilities.UploadFile(fThumb, @"categories", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(categoryie.Thumb))
+                    {
+                        categoryie.Thumb = "placeholder-image.jpg";
+                    }
 
+                    if (fCover != null)
+                    {
+                        string extension = Path.GetExtension(fCover.FileName);
+                        string image = Utilities.SEOUrl(categoryie.CateName) + extension;
+                        categoryie.Cover = await Utilities.UploadFile(fCover, @"categories", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(categoryie.Cover))
+                    {
+                        categoryie.Cover = "placeholder-image.jpg";
+                    }
+
+                    categoryie.Alias = Utilities.SEOUrl(categoryie.CateName);
+                    categoryie.MetaKey = categoryie.CateName;
+                    categoryie.MetaDesc = categoryie.CateName;
+                    categoryie.Title = categoryie.CateName;
+                    categoryie.Description = categoryie.CateName;
 
                     db.Update(categoryie);
                     await db.SaveChangesAsync();
