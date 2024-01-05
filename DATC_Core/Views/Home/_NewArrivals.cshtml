@@ -22,9 +22,9 @@
                         <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
                         <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li> *@
 
-                            @foreach (var item in Model.Take(4))
+                            @foreach (var item in Model.Select(item => item.Cate).DistinctBy(c => c.CateName).Take(4))
                             {
-                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">@item.Cate.CateName</li>
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">@item.CateName</li>
                             }
 
                         </ul>
@@ -95,7 +95,7 @@
                                             {
                                                 @(priceSell.Value.ToString("#,##0") + " VND")
                                                 ;
-                                                <span>@item.Price VND</span>
+                                                <span>@(item.Price.Value.ToString("#,##0") + " VND") </span>
                                             }
                                         </div>
                                     </div>
