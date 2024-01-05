@@ -18,7 +18,7 @@ namespace DATC_Core.Controllers
 
 		public IActionResult Index(int? id)
 		{
-            var items = db.Products.ToList();
+            var items = db.Products.Include(x=>x.Cate).ToList();
             if (id != null)
             {
                 items = items.Where(x => x.ProductId == id).ToList();
@@ -27,14 +27,15 @@ namespace DATC_Core.Controllers
         }
 		public IActionResult Detail(int id)
 		{
-            var product = db.Products.Include(x => x.Cate).AsNoTracking().ToList();
-            if (product == null)
+            //var product = db.Products.Include(x => x.Cate).AsNoTracking();
+            var item = db.Products.Include(x => x.Cate).AsNoTracking().FirstOrDefault(x => x.ProductId == id);
+            if (item == null)
             {
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(product);
+                return View(item);
 
             }
 
@@ -44,6 +45,12 @@ namespace DATC_Core.Controllers
             //return View(product);
 
         }
+
+        //public decimal countReview()
+        //{
+        //    decimal review = (decimal)db.ProductReviews.Count();
+        //    return review;
+        //}
 
     }
 }

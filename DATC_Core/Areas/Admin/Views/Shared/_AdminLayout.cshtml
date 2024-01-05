@@ -28,6 +28,8 @@
     <link href="~/adminassets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
     <!-- summernote -->
     <link href="~/adminassets/plugins/summernote/summernote-bs4.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/assets/plugins/simplemde/simplemde.min.css">
     <!-- css -->
     <link href="~/adminassets/css/style.css" rel="stylesheet" />
     <!-- DataTables -->
@@ -129,17 +131,26 @@
     @await RenderSectionAsync("Scripts", required:false)
 
     <script>
-        $(function () {
-            $('.textarea').summernote()
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 150;
+            });
+            $('#summernote').summernote();
+            $('.textarea').summernote();
+        });
+        $(function readURL(input) {
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.querySelector("#product-img").setAttribute("src", e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
         })
     </script>
 
-    <script>
-        $(function () {
-            // Summernote
-            $('#summernote').summernote()
-        })
-    </script>
     <!-- DataTables  & Plugins -->
     <script src="~/AdminAssets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="~/AdminAssets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -245,8 +256,6 @@
             $('#timepicker').datetimepicker({
                 format: 'LT'
             })
-
-
 
             //Bootstrap Duallistbox
             $('.duallistbox').bootstrapDualListbox()

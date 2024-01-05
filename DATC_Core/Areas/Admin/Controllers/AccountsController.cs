@@ -26,6 +26,10 @@ namespace DATC_Core.Areas.Admin.Controllers
         // GET: Admin/Accounts
         public async Task<IActionResult> Index()
         {
+            //ViewData["QuyenTruyCap"] = new SelectList(db.Roles, "RoleId", "Description");
+
+
+
             ViewBag.countAccount = db.Accounts.Where(m => m.Active == true).Count();
             var dATCCoreMineDBContext = db.Accounts.Include(a => a.Role);
             return View(await dATCCoreMineDBContext.ToListAsync());
@@ -54,6 +58,7 @@ namespace DATC_Core.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["RoleId"] = new SelectList(db.Roles, "RoleId", "RoleId");
+            //ViewData["QuyenTruyCap"] = new SelectList(db.Roles, "RoleId", "Description");
             ViewBag.listRole = new SelectList(db.Roles, "RoleId", "RoleId");
             ViewBag.ActiveOptions = new List<SelectListItem> {
                     new SelectListItem { Text = "Active", Value = "true" },

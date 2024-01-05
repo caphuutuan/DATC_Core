@@ -75,10 +75,10 @@
                                 <th class="text-center" style="width:3rem;">ID</th>
                                 <th class="text-center" style="width:10rem;">Tên sản phẩm</th>
                                 <th class="no-sort text-center" style="width:10rem">Loại sản phẩm</th>
-                                <th class="no-sort text-center" style="width:5rem">Giá bán</th>
+                                <th class="no-sort text-center" style="width:5rem">Giá gốc</th>
                                 <th class="no-sort text-center" style="width:5rem">Discount</th>
+                                <th class="no-sort text-center" style="width:5rem">Giá bán</th>
                                 <th class="no-sort text-center" style="width:5rem">Tồn kho</th>
-                                <th class="no-sort text-center" style="width:5rem">Status</th>
                                 <th class="no-sort text-center" style="width:5rem">Bán chạy</th>
                                 <th class="no-sort text-center" style="width:10rem">Action</th>
                             </tr>
@@ -94,22 +94,18 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="~/Admin/AdminCategories/Details/@Html.DisplayFor(modelItem => item.CateId)">
+                                        @* <a href="~/Admin/AdminCategories/Details/@Html.DisplayFor(modelItem => item.CateId)">
                                             @Html.DisplayFor(modelItem => item.Cate.CateName)
-                                        </a>
+                                        </a> *@
+                                        @(item.CateId == null ? "No Category" : item.Cate.CateName)
                                     </td>
                                     <td class="text-center">@item.Price.Value.ToString("#,##0") VND</td>
-                                    <td class="text-center">@item.Discount.Value.ToString("#,##0") %</td>
-                                    <td class="text-center">@item.UnitsInStock</td>
+                                    <td class="text-center">@item.Discount.Value.ToString("#,##0") % </td>
                                     <td class="text-center">
-                                        @if (item.UnitsInStock.Value > 0)
-                                        {
-                                            <p>Còn hàng</p>
-                                        }
-                                        else
-                                        {
-                                            <p>Hết hàng</p>
-                                        }
+                                        @(item.PriceSell == null ? "0 VND" : ((item.PriceSell).Value.ToString("#,##0") + " VND"))
+                                    </td>
+                                    <td class="text-center">
+                                        <p>@Html.Raw(item.UnitsInStock.Value > 0 ? "Còn <strong>"+ @item.UnitsInStock + "</strong> sản phẩm": "Hết hàng")</p>
                                     </td>
                                     <td class="text-center">
                                         @if (item.BestSeller == true)
@@ -203,7 +199,7 @@
                             alert('error');
                         }
                     });
-                }, 500); 
+                }, 500);
             });
 
         });

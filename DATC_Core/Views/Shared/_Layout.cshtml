@@ -21,8 +21,18 @@
     <link rel="stylesheet" type="text/css" href="~/assets/styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="~/assets/styles/responsive.css">
     <!-- product -->
-    <!--  -->
+
+
+
+
+
     @await RenderSectionAsync("Styles", required:false)
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 
 <body>
@@ -64,7 +74,15 @@
     <script src="~/assets/js/single_custom.js"></script>
 
     <script src="~/assets/js/categories_custom.js"></script>
-
+    <!-- summernote -->
+    <script src="~/assets/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        $(function () {
+            // Summernote
+            $('#summernote').summernote()
+            $('.summernote').summernote()
+        })
+    </script>
 
 </body>
 

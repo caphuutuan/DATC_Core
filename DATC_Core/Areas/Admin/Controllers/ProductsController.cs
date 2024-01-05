@@ -38,7 +38,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 lsProducts = db.Products
                 .AsNoTracking()
-                .Where(x => x.CateId == CateId)
+                .Where(x =>  x.Active == true)
                 .Include(x => x.Cate)
                 .OrderByDescending(x => x.ProductId).ToList();
             }
@@ -46,7 +46,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             {
                 lsProducts = db.Products
                .AsNoTracking()
-               .Include(x => x.Cate)
+               .Include(x => x.Cate )
                .OrderByDescending(x => x.ProductId).ToList();
             }
             PagedList<Product> models = new PagedList<Product>(lsProducts.AsQueryable(), pageNumber, pageSize);
@@ -118,7 +118,11 @@ namespace DATC_Core.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["DanhMuc"] = new SelectList(db.Categoryies, "CateId", "CateName");
-
+            ViewBag.StatusList = new SelectList(new[]
+    {
+        new SelectListItem { Value = "true", Text = "Hiển thị" },
+        new SelectListItem { Value = "false", Text = "Không hiển thị" }
+    }, "Value", "Text");
             List<Categoryie> categoryies = db.Categoryies.ToList();
             ViewBag.cateList = new SelectList(categoryies, "CateId", "CateName");
 
@@ -150,39 +154,42 @@ namespace DATC_Core.Areas.Admin.Controllers
                     if (fVideo != null)
                     {
                         string extension = Path.GetExtension(fVideo.FileName);
-                        string image = Utilities.SEOUrl(product.ProductName) + extension;
-                        product.Thumb = await Utilities.UploadFile(fVideo, @"products", image.ToLower());
+                        string video = Utilities.SEOUrl(product.ProductName) + extension;
+                        product.Video = await Utilities.UploadFile(fVideo, @"products", video.ToLower());
                     }
-                    if (string.IsNullOrEmpty(product.Thumb))
+                    if (string.IsNullOrEmpty(product.Video))
                     {
-                        product.Thumb = "product-placeholder.png";
+                        product.Video = "product-placeholder.png";
                     }
 
                     //String strSlug = XString.ToAscii(product.ProductName);
                     product.CreateDate = DateTime.Now;
-                    product.UnitsInStock = 0;
-                    product.Discount = 0;
-                    product.Price = 0;
-                    product.IsHome = false;
+                    //product.UnitsInStock = 0;
+                    //product.Discount = 0;
+                    //product.Price = 0;
+                    product.PriceSell = product.Price - (product.Price * product.Discount / 100);
                     product.Alias = Utilities.SEOUrl(product.ProductName);
                     product.MetaDesc = product.ProductName;
                     product.Description = product.ProductName;
                     product.Title = product.ProductName;
                     product.MetaKey = product.ProductName;
-                    product.Active = false;
                     db.Add(product);
                     await db.SaveChangesAsync();
                     _notyfService.Success("Tạo mới thành công");
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 var abc = e.Message;
             }
 
             ViewData["DanhMuc"] = new SelectList(db.Categoryies, "CateId", "CateName");
-
+            ViewBag.StatusList = new SelectList(new[]
+    {
+        new SelectListItem { Value = "true", Text = "Hiển thị" },
+        new SelectListItem { Value = "false", Text = "Không hiển thị" }
+    }, "Value", "Text");
             List<Categoryie> categoryies = db.Categoryies.ToList();
             ViewBag.cateList = new SelectList(categoryies, "CateId", "CateName");
 
@@ -247,8 +254,8 @@ namespace DATC_Core.Areas.Admin.Controllers
                         product.Thumb = "avatar_profile_null.jpg";
                     }
 
-
                     product.Alias = Utilities.SEOUrl(product.ProductName);
+                    product.PriceSell = product.Price - (product.Price * product.Discount / 100);
                     product.ModifiedDate = DateTime.Now;
                     // Preserve the original CreateDate
                     //var originalProduct = await db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.ProductId == id);
@@ -311,7 +318,7 @@ namespace DATC_Core.Areas.Admin.Controllers
             }
 
             await db.SaveChangesAsync();
-                _notyfService.Success("Xoá thành công ID = "+ id);
+            _notyfService.Success("Xoá thành công ID = " + id);
             return RedirectToAction(nameof(Index));
         }
 
