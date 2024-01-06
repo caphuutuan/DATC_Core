@@ -1,0 +1,167 @@
+﻿@model DATC_Core.Models.Page
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles{
+    <link href="~/adminassets/plugins/summernote/summernote.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.css" rel="stylesheet">
+
+}
+
+@using (Html.BeginForm("Create", "Pages", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <section class="content py-2">
+        <div class="container-fluid">
+            <!--Content-->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="text-csm">@ViewBag.Title</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="float-right pt-1">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-save"></i>&nbsp; Save
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <a href="~/Admin/Pages/Index" class="text-white"><i class="fas fa-door-open"></i>&nbsp; Thoát</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tên trang</label>
+                                    @Html.EditorFor(model => model.PageName, new { htmlAttributes = new { @class = "form-control"} })
+                                    @Html.ValidationMessageFor(model => model.PageName, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tiêu đề</label>
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control"  } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Nội dung</label>
+                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control " } })
+                                    @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger"  })
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">MetaKey</label>
+                                    @Html.EditorFor(model => model.MetaKey, new { htmlAttributes = new { @class = "form-control"  } })
+                                    @Html.ValidationMessageFor(model => model.MetaKey, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">MetaDesc</label>
+                                    @Html.EditorFor(model => model.MetaDesc, new { htmlAttributes = new { @class = "form-control"  } })
+                                    @Html.ValidationMessageFor(model => model.MetaDesc, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="Thumb">Thumb</label>
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
+                                    @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Trạng thái</label>
+                                @Html.DropDownListFor(model => model.Published,  new[] { new SelectListItem { Value = "true", Text = "Hiển thị" },new SelectListItem { Value = "false", Text = "Không hiển thị" }, }, "[Trạng thái]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+@section Scripts{
+
+    <script src="~/adminassets/plugins/summernote/summernote.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                tabsize: 2,
+                height: 150,
+                minHeight: null,
+                maxHeight: null,
+                focus: true,
+                airMode: true,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ],
+                popover: {
+                    image: [
+                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    link: [
+                        ['link', ['linkDialogShow', 'unlink']]
+                    ],
+                    table: [
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                    ],
+                    air: [
+                        ['color', ['color']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['para', ['ul', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture']]
+                    ]
+                },
+                codemirror: {
+                    theme: 'monokai'
+                }
+            });
+        });
+    </script>
+}

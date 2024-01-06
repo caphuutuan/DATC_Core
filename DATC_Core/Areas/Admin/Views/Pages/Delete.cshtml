@@ -1,0 +1,93 @@
+﻿@model DATC_Core.Models.Page
+
+@{
+    ViewData["Title"] = "Xác nhận xoá Trang";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content my-2">
+    <div class="container-fluid">
+        <!--Content-->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="text-csm">@ViewBag.Title</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="float-right pt-1">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-actions no-color">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="far fa-trash-alt fa-xs"></i> &nbsp; Xóa vĩnh viễn
+                                    </button>
+
+                                    <button type="button" class="btn btn-info btn-sm">
+                                        <a href="@Url.Action("Index", "Pages")" class="text-white"><i class="fas fa-sign-out-alt fa-xs"></i>&nbsp;   Back To List</a>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+
+                    <tr>
+                        <th scope="col"> ID</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.PageId)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> Tên trang</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.PageName)</td>
+                    <tr>
+                    <tr>
+                        <th scope="col"> Tiêu đề</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Title)</td>
+                    <tr>
+                    <tr>
+                        <th scope="col"> Nội dung</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Contents)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> MetaKey</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.MetaKey)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> MetaDesc</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.MetaDesc)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> Bí danh</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Alias)</td>
+                    </tr>
+                    <tr>
+                        <th scope="col"> Ảnh bìa</th>
+                        <td scope="col">
+                            <img width="200" src="~/images/pages/@Model.Thumb" alt="@Model.Title" />
+                        </td>
+                    <tr>
+                    <tr>
+                        <th scope="col"> Ngày tạo</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.CreatedAt)</td>
+                    <tr>
+                    <tr>
+                        <th scope="col"> Ordering</th>
+                        <td scope="col">  @Html.DisplayFor(model => model.Ordering)</td>
+                    <tr>
+                    <tr>
+                        <th scope="col"> Trạng thái</th>
+                        <td scope="col">
+                                                                    @(Model.Published == true ? "Hiển thị" : "Không hiển thị")
+                        </td>
+                    <tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

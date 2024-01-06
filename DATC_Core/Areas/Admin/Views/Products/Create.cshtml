@@ -5,6 +5,12 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section Styles{
+    <link href="~/adminassets/plugins/summernote/summernote-bs4.min.css" rel="stylesheet" />
+    <link href="~/adminassets/plugins/summernote/summernote.css" rel="stylesheet" />
+
+}
+
 @using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -58,7 +64,7 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Nhãn</label>
-                                    @Html.DropDownListFor(model=>model.Tags, ViewBag.cateList as SelectList, "[Chọn tags]", new { @class = "form-control select2 " })
+                                    @Html.DropDownListFor(model=>model.Tags, ViewBag.cateList as SelectList, "[Chọn tags]", new { @class = "form-control select2 ", @multiple="multiple" })
                                     @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger"  })
                                 </div>
 
@@ -193,6 +199,9 @@
 }
 
 @section Scripts {
+
+    <script src="~/adminassets/plugins/summernote/summernote-bs4.js"></script>
+
     <script>
         function showImage(input) {
             if (input.files && input.files[0]) {
@@ -204,19 +213,17 @@
             }
         };
 
-    </script>
-
-    <script>
-        $(document).ready(function () {
+        jQuery(document).ready(function () {
             $('.summernote').summernote({
-                height: 150;
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5'],
+                height: 200,
+                minHeight: null,
+                maxHeight: null,
+                focus: true
             });
-            $('#summernote').summernote();
-            $('.textarea').summernote();
         });
-    </script>
 
-    <script>
         function calculatePrice() {
             // Lấy giá trị từ các ô input
             var originalPrice = parseFloat(document.getElementById('Price').value) || 0;
@@ -229,4 +236,55 @@
             document.getElementById('PriceSell').value = priceSell
         };
     </script>
+
+@*     <script>
+
+        // $('.summernote').summernote();
+        // $('.summernote').summernote(option = {});
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                placeholder: 'Enter content....',
+                tabsize: 2,
+                height: 200,
+                minHeight: 100,
+                maxHeight: 300,
+                focus: true,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ],
+                popover: {
+                    image: [
+                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    link: [
+                        ['link', ['linkDialogShow', 'unlink']]
+                    ],
+                    table: [
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                    ],
+                    air: [
+                        ['color', ['color']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['para', ['ul', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture']]
+                    ]
+                },
+                codemirror: {
+                    theme: 'monokai'
+                }
+            });
+        });
+    </script> *@
 }

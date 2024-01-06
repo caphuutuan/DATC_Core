@@ -1,0 +1,100 @@
+﻿@model DATC_Core.Models.Page
+
+@{
+    ViewData["Title"] = Html.Raw($"Chỉnh sửa Trang <em><strong>{Model.PageName}</strong></em>");
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "Pages", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <section class="content py-2">
+        <div class="container-fluid">
+            <!--Content-->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                            @* <h5 class="text-csm">@ViewBag.Title</h5> *@
+                        </div>
+                        <div class="col-4">
+                            <div class="float-right pt-1">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-save"></i>&nbsp; Save
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <a href="~/Admin/Pages/Index" class="text-white"><i class="fas fa-door-open"></i>&nbsp; Thoát</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(x=>x.PageId)
+                                @Html.HiddenFor(x=>x.Thumb)
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tên trang</label>
+                                    @Html.EditorFor(model => model.PageName, new { htmlAttributes = new { @class = "form-control"} })
+                                    @Html.ValidationMessageFor(model => model.PageName, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tiêu đề</label>
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control"  } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Nội dung</label>
+                                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control " } })
+                                    @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger"  })
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">MetaKey</label>
+                                    @Html.EditorFor(model => model.MetaKey, new { htmlAttributes = new { @class = "form-control"  } })
+                                    @Html.ValidationMessageFor(model => model.MetaKey, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">MetaDesc</label>
+                                    @Html.EditorFor(model => model.MetaDesc, new { htmlAttributes = new { @class = "form-control"  } })
+                                    @Html.ValidationMessageFor(model => model.MetaDesc, "", new { @class = "text-danger"  })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="Thumb">Thumb</label>
+                                    <input name="fThumb" type="file" class="form-control-file" asp-for="Thumb">
+                                    @Html.ValidationMessageFor(model => model.Thumb, "", new { @class = "text-danger"  })
+                                    <br>
+                                    <img src="~/images/pages/@Model.Thumb" width="200px" alt="@Model.Title">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-10">Trạng thái</label>
+                                @Html.DropDownListFor(model => model.Published,  new[] { new SelectListItem { Value = "true", Text = "Hiển thị" },new SelectListItem { Value = "false", Text = "Không hiển thị" }, }, "[Trạng thái]", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

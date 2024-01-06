@@ -1,0 +1,90 @@
+﻿@model IEnumerable<DATC_Core.Models.Page>
+
+@{
+    ViewData["Title"] = "Danh sách Trang";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles{
+    <link href="~/adminassets/plugins/summernote/summernote.css" rel="stylesheet" />
+
+}
+
+<section class="content py-2">
+    <div class="container-fluid">
+        <!--Content-->
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <div class="float-right pt-1">
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <a href="~/Admin/Pages/Create" class="text-white"><i class="fas fa-plus fa-xs"></i>&nbsp; Thêm mới</a>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <a href="~/Admin/Pages/Trash" class="text-white"><i class="far fa-trash-alt fa-xs"></i>&nbsp; Thùng rác (@(ViewBag.count_trash ?? "?"))</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-hover nowrap">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:2rem;">ID</th>
+                                <th class="text-center" style="">Page Name</th>
+                                <th class="no-sort text-center" style="width:10rem">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records_table">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.PageId)</td>
+                                    <td>
+                                        <a href="~/Admin/Pages/Details/@Html.DisplayFor(modelItem => item.PageId)">
+                                            @Html.DisplayFor(modelItem => item.PageName)
+                                        </a>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <label class="switch">
+                                            @if (item.Published == true)
+                                            {
+                                                <input class="changeStatus" data-id="@item.PageId" data-controller="Products" type="checkbox" checked>
+                                            }
+                                            else
+                                            {
+                                                <input class="changeStatus" data-id="@item.PageId" data-controller="Products" type="checkbox">
+                                            }
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
+                                            <a href="@Url.Action("Edit", "Pages", new { id = item.PageId })" class="text-white"><i class="fas fa-pen"></i></a>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                            <a href="@Url.Action("Delete", "Pages", new { id = item.PageId })" class="text-white"><i class="far fa-trash-alt"></i></a>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+
+    
+}

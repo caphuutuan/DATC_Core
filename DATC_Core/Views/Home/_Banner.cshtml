@@ -1,35 +1,70 @@
 ﻿@model IEnumerable<DATC_Core.Models.Product>
 
 
-<div class="banner">
-	<div class="container">
-		<div class="row">
-			@foreach (var item in Model.Take(3))
-			{
-				<div class="col-md-4">
-					<div class="banner_item align-items-center" style="background-image: url('@Url.Content("~/images/categories/" + item.Cate.Thumb)')">
-						<div class="banner_category">
-							<a href="#">@item.Cate.CateName</a>
-						</div>
-					</div>
-				</div>
-			}
-			
-			@* <div class="col-md-4">
-				<div class="banner_item align-items-center" style="background-image:url(/assets/images/banner_2.jpg)">
-					<div class="banner_category">
-						<a href="#">accessories's</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="banner_item align-items-center" style="background-image:url(/assets/images/banner_3.jpg)">
-					<div class="banner_category">
-						<a href="#">men's</a>
-					</div>
-				</div>
-			</div> *@
+<div class="banner" style="left: 1%; margin-bottom: -60px;">
+    <div class="container" style="top: 1px;">
+        @* <div class="row">
+        @foreach (var item in Model.Take(3))
+        {
+        <div class="col-md-4">
+        <div class="banner_item align-items-center" style="background-image: url('@Url.Content("~/images/categories/" + item.Cate.Thumb)')">
+        <div class="banner_category">
+        <a href="#">@item.Cate.CateName</a>
+        </div>
+        </div>
+        </div>
+        }
 
-		</div>
-	</div>
+        @* <div class="col-md-4">
+        <div class="banner_item align-items-center" style="background-image:url(/assets/images/banner_2.jpg)">
+        <div class="banner_category">
+        <a href="#">accessories's</a>
+        </div>
+        </div>
+        </div>
+        <div class="col-md-4">
+        <div class="banner_item align-items-center" style="background-image:url(/assets/images/banner_3.jpg)">
+        <div class="banner_category">
+        <a href="#">men's</a>
+        </div>
+        </div>
+        </div>
+
+        </div> *@
+
+
+
+        <div class="row">
+            <div class="col">
+                <div class="product_slider_container">
+                    <div class="owl-carousel owl-theme product_slider">
+                        @foreach (var item in Model.Select(item => item.Cate).DistinctBy(c => c.CateName))
+                        {
+                            <div class="col-md-15" style="width: auto;    padding: 0 12px;">
+                                <div class="banner_item align-items-center" style="background-image: url('@Url.Content("~/images/categories/" + item.Thumb)')">
+                                    <div class="banner_category" style="margin: 0 25px !important ;padding: 0 8px !important ;background: rgba(255, 255, 255, 0.87); height: auto">
+                                        <a href="#">@item.CateName</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+
+
+
+
+                    <!-- Slider Navigation -->
+
+                    <div class="product_slider_nav_left product_slider_nav d-flex align-items-center justify-content-center flex-column">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="product_slider_nav_right product_slider_nav d-flex align-items-center justify-content-center flex-column">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -147,16 +147,19 @@ namespace DATC_Core.Areas.Admin.Controllers
                         string image = Utilities.SEOUrl(product.ProductName) + extension;
                         product.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
                     }
+
                     if (string.IsNullOrEmpty(product.Thumb))
                     {
                         product.Thumb = "avatar_profile_null.jpg";
                     }
+
                     if (fVideo != null)
                     {
                         string extension = Path.GetExtension(fVideo.FileName);
                         string video = Utilities.SEOUrl(product.ProductName) + extension;
                         product.Video = await Utilities.UploadFile(fVideo, @"products", video.ToLower());
                     }
+
                     if (string.IsNullOrEmpty(product.Video))
                     {
                         product.Video = "product-placeholder.png";
